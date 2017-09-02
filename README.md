@@ -1,0 +1,3 @@
+## template-gulp
+
+npm dedupe
