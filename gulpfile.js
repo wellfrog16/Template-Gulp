@@ -26,9 +26,6 @@ gulp.task('clean', function(cb){
 gulp.task('less', function(cb){
     gulp.src('src/style/main.less')
         .pipe(less())
-        .pipe(rename(function(path){
-            path.basename += '.min';
-        }))
         .pipe(gulp.dest('./src/style'));
     cb();
 });
@@ -39,8 +36,11 @@ gulp.task('cleancss', function(cb){
             'src/style/*.css'
             , 'src/js/lib/swiper/*.css'
         ])
-        .pipe(concat('main.min.css'))
+        .pipe(concat('main.css'))
         .pipe(cleanCSS())
+        .pipe(rename(function(path){
+            path.basename += '.min';
+        }))
         .pipe(gulp.dest('dist/style'))
         //.pipe(notify('CSS合并压缩完成'));
     cb();

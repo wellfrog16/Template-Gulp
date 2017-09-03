@@ -1,3 +1,3 @@
-﻿require(["jquery", 'script'], function ($, script) {
+﻿require(['script'], function (script) {
     script.open();    
 });
