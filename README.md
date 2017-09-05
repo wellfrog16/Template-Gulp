@@ -4,7 +4,7 @@ npm dedupe
 
 https://github.com/ai/browserslist#queries
 
-`
+```
 // 将设置放入此文件中以覆盖默认设置
 {
     "workbench.iconTheme": "vscode-icons",
@@ -39,4 +39,4 @@ https://github.com/ai/browserslist#queries
         "less"
     ]
 }
-`
+```
