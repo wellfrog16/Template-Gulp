@@ -1,6 +1,7 @@
 //导入工具包 require('node_modules里对应模块')
 var del = require('del'),
     gulp = require('gulp'), //本地安装gulp所用到的地方
+    autoprefixer = require('gulp-autoprefixer'),
     cache = require("gulp-cache"),
     cleanCSS = require('gulp-clean-css'),
     concat = require('gulp-concat'),
@@ -26,6 +27,10 @@ gulp.task('clean', function(cb){
 gulp.task('less', function(cb){
     gulp.src('src/style/main.less')
         .pipe(less())
+        .pipe(autoprefixer({
+            browsers: ['last 3 versions', '>8%'],
+            cascade: false
+        }))
         .pipe(gulp.dest('./src/style'));
     cb();
 });

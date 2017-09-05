@@ -1,4 +1,4 @@
-﻿define(['jquery'], function ($) {
+﻿define(function () {
 
     /************************************************************
     { 
@@ -36,8 +36,8 @@
         // 内部变量
         args.times = args.times || 0;
 
-        args.target.css("transform", "scale(" + baseScale * scale + ")");
-        args.target.css("background-size", args.row * 100 + '%');
+        args.target.css('transform', 'scale(' + baseScale * scale + ')');
+        args.target.css('background-size', args.row * 100 + '%');
         args.target.css('background-position', '0 0');
         //args.target.css("transform-origin", '0px 0px 0px');
         args.target.show();
@@ -87,14 +87,14 @@
             }
             else {
                 var x = args.width * (num % args.row) * -1,
-                    y = args.height * parseInt(num / args.row) * -1
+                    y = args.height * parseInt(num / args.row) * -1;
 
                 args.target.css('background-position', x + 'px ' + y + 'px');
             }
-        }, 1000 / args.fps)
+        }, 1000 / args.fps);
 
         return timer;
-    }
+    };
 
     return self;
 

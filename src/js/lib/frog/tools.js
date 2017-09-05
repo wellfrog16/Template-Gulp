@@ -1,25 +1,25 @@
 ﻿define(['jquery'], function ($) {
 
-    var self = {}
+    var self = {};
 
     // 全局变量存储用
-    self.variable = {}
+    self.variable = {};
 
     // 获得url参数
     self.getUrlParam = function(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)'); //构造一个含有目标参数的正则表达式对象
         var r = window.location.search.substr(1).match(reg);  //匹配目标参数
         if (r != null) return decodeURIComponent(r[2]); return null; //返回参数值
-    }
+    };
 
     // 移动设备简单判断
     self.device = (function () {
-        return /android/.test(navigator.userAgent.toLowerCase()) ? 'android' : 'iphone'
+        return /android/.test(navigator.userAgent.toLowerCase()) ? 'android' : 'iphone';
     })();
 
     // 是否PC端简单判断
     self.isPC = (function () {
-        var Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+        var Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod'];
         var flag = true;
         for (var v = 0; v < Agents.length; v++) {
             if (navigator.userAgent.indexOf(Agents[v]) > 0) { flag = false; break; }
@@ -47,7 +47,7 @@
                 o.css(item, scaleNum * parseInt(o.css(item)));
             });
         });
-    }
+    };
 
     return self;
 

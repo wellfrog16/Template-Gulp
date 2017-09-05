@@ -2,23 +2,24 @@
     "name": "template-gulp",
     "version": "1.0.0",
     "description": "模板文件",
-    "main": "index.js",
+    "main": "app.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/wellfrog16/Template-Gulp.git"
+        "url": "git+https://github.com/wellfrog16/template-gulp.git"
     },
     "author": "wellfrog",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/wellfrog16/Template-Gulp/issues"
+        "url": "https://github.com/wellfrog16/template-gulp/issues"
     },
-    "homepage": "https://github.com/wellfrog16/Template-Gulp#readme",
+    "homepage": "https://github.com/wellfrog16/template-gulp#readme",
     "devDependencies": {
         "del": "^3.0.0",
         "gulp": "^3.9.1",
+        "gulp-autoprefixer": "^4.0.0",
         "gulp-cache": "^0.4.6",
         "gulp-clean-css": "^3.7.0",
         "gulp-concat": "^2.6.1",
@@ -32,5 +33,6 @@
         "gulp-requirejs-optimize": "^1.2.0",
         "gulp-uglify": "^3.0.0",
         "pump": "^1.0.2"
-    }
+    },
+    "dependencies": {}
 }

@@ -1,6 +1,5 @@
-﻿require.config(
-{
-    baseUrl: "js",
+﻿require.config({
+    baseUrl: 'js',
 
     buildCSS: false,
     inlineText : false,
@@ -73,4 +72,4 @@
 
     waitSeconds: 30,
     urlArgs : '_=' + new Date().getTime()
-})
+});
