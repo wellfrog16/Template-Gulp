@@ -2,7 +2,8 @@
 var del = require('del'),
     gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
-    cache = require("gulp-cache"),
+    //babel = require('gulp-babel'),
+    cache = require('gulp-cache'),
     cleanCSS = require('gulp-clean-css'),
     concat = require('gulp-concat'),
     connect = require('gulp-connect'),
@@ -10,7 +11,7 @@ var del = require('del'),
     htmlmin = require('gulp-htmlmin'),
     imagemin = require('gulp-imagemin'),
     less = require('gulp-less'),
-    notify = require("gulp-notify"),
+    //notify = require('gulp-notify'),
     rename = require('gulp-rename'),
     requirejsOptimize = require('gulp-requirejs-optimize'),
     revhash = require('gulp-rev-hash'),
@@ -20,9 +21,8 @@ var del = require('del'),
 
 // 清除发布目录
 gulp.task('clean', function(cb){
-    del(['dist']).then(paths => {
-        cb()
-    });
+    // 测试es6语法
+    del(['dist']).then(()=>{ cb(); });
 });
 
 // 解析less文件
@@ -43,16 +43,16 @@ gulp.task('less', function(cb){
 // 合并压缩css文件
 gulp.task('cleancss', function(cb){
     gulp.src([
-            'src/style/*.css'
-            , 'src/js/lib/swiper/*.css'
-        ])
+        'src/style/*.css',
+        'src/js/lib/swiper/*.css'
+    ])
         .pipe(concat('main.css'))
         .pipe(cleanCSS())
         .pipe(rename(function(path){
             path.basename += '.min';
         }))
-        .pipe(gulp.dest('dist/style'))
-        //.pipe(notify('CSS合并压缩完成'));
+        .pipe(gulp.dest('dist/style'));
+    //.pipe(notify('CSS合并压缩完成'));
     cb();
 });
 
@@ -89,6 +89,10 @@ gulp.task('js:main', function () {
         .pipe(requirejsOptimize({
             mainConfigFile: 'src/js/requirejs/require.config.js'
         }))
+        // .pipe(babel({  
+        //     presets: ['es2015']  
+        // }))
+        // .pipe(uglify())
         .pipe(rename('main.min.js'))
         // .pipe(rename(function(path){
         //     path.basename += '.min';
@@ -103,8 +107,8 @@ gulp.task('requirejs', function(cb) {
     pump([
         gulp.src(['src/js/requirejs/require.js', 'src/js/requirejs/require.config.js'])
             .pipe(concat('require.combine.js')),
-            uglify(),
-            gulp.dest('dist/js')
+        uglify(),
+        gulp.dest('dist/js')
     ], cb);
 
 });
@@ -127,9 +131,9 @@ gulp.task('htmlreplace', function(cb) {
 });
 
 // 监听less
-gulp.task('watch',function(){
-    gulp.watch('./src/style/**/*.less',['less']);
-})
+gulp.task('watch', function(){
+    gulp.watch('./src/style/**/*.less', ['less']);
+});
 
 // 组合操作
 gulp.task('default', function(cb) {
