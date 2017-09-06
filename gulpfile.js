@@ -1,6 +1,6 @@
 //导入工具包 require('node_modules里对应模块')
 var del = require('del'),
-    gulp = require('gulp'), //本地安装gulp所用到的地方
+    gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     cache = require("gulp-cache"),
     cleanCSS = require('gulp-clean-css'),
@@ -55,15 +55,6 @@ gulp.task('cleancss', function(cb){
         //.pipe(notify('CSS合并压缩完成'));
     cb();
 });
-
-// gulp.task('js', function(cb) {
-//     pump([
-//         gulp.src('js/*.js')
-//             .pipe(concat('all.js')),
-//         uglify(),
-//         gulp.dest('dist')
-//     ], cb);
-// });
 
 // 无损压缩图片
 gulp.task('image', () =>
@@ -124,13 +115,7 @@ gulp.task('htmlreplace', function(cb) {
         .pipe(htmlreplace({
             'js': ['js/require.combine.js', 'js/main.min.js'],
             'css': 'style/main.min.css'
-            // js: {
-            //     src: ['js/require.combine.js', 'js/main.min.js'],
-            //     tpl: '<script src="%s"></script>'
-            //   }
         }))
-        // .pipe(rev())
-        // .pipe(revReplace())
         .pipe(revhash({assetsDir: 'dist'}))
         .pipe(htmlmin({
             removeComments: true,
