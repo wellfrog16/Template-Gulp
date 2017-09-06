@@ -2,7 +2,7 @@
     baseUrl: 'js',
 
     buildCSS: false,
-    inlineText : false,
+    inlineText : true,
 
     map: {
         '*': {

@@ -13,6 +13,8 @@ var del = require('del'),
     notify = require("gulp-notify"),
     rename = require('gulp-rename'),
     requirejsOptimize = require('gulp-requirejs-optimize'),
+    revhash = require('gulp-rev-hash'),
+    sequence = require('gulp-sequence'),
     uglify = require('gulp-uglify'),
     pump = require('pump');
 
@@ -29,7 +31,10 @@ gulp.task('less', function(cb){
         .pipe(less())
         .pipe(autoprefixer({
             browsers: ['last 3 versions', '>8%'],
-            cascade: false
+            cascade: false,        // 美化属性，默认true
+            add: true,             // 是否添加前缀，默认true
+            remove: true,          // 删除过时前缀，默认true
+            flexbox: true          // 为flexbox属性添加前缀，默认true
         }))
         .pipe(gulp.dest('./src/style'));
     cb();
@@ -119,9 +124,21 @@ gulp.task('htmlreplace', function(cb) {
         .pipe(htmlreplace({
             'js': ['js/require.combine.js', 'js/main.min.js'],
             'css': 'style/main.min.css'
+            // js: {
+            //     src: ['js/require.combine.js', 'js/main.min.js'],
+            //     tpl: '<script src="%s"></script>'
+            //   }
         }))
-        .pipe(htmlmin({collapseWhitespace: true}))
+        // .pipe(rev())
+        // .pipe(revReplace())
+        .pipe(revhash({assetsDir: 'dist'}))
+        .pipe(htmlmin({
+            removeComments: true,
+            collapseWhitespace: false
+        }))
         .pipe(gulp.dest('dist/'));
+
+    cb();
 });
 
 // 监听less
@@ -130,6 +147,7 @@ gulp.task('watch',function(){
 })
 
 // 组合操作
-gulp.task('default', ['clean'], function(cb) {
-    gulp.start('js:main', 'requirejs', 'cleancss', 'image', 'htmlreplace');
+gulp.task('default', function(cb) {
+    //gulp.start('js:main', 'requirejs', 'cleancss', 'image', 'htmlreplace');
+    sequence('clean', ['js:main', 'requirejs', 'cleancss', 'image'], 'htmlreplace')(cb);
 });

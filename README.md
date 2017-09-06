@@ -2,6 +2,8 @@
 
 npm dedupe
 
+npm i gulp-load-plugins
+
 https://github.com/ai/browserslist#queries
 
 ```
