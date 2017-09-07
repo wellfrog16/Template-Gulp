@@ -11,7 +11,7 @@ define(['jquery', 'swiper', 'text!../template/test.html!strip', 'jquery.cookie',
         $.cookie('QQ', '123456');
 
         var a = '下一季，呵呵',
-            b = '郑伊健3112';
+            b = '郑伊健312';
 
         console.log($.cookie('QQ'));
         console.log(a + b);
