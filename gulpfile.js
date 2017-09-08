@@ -74,7 +74,13 @@ gulp.task('requirejs', function(cb) {
         $.uglify(),
         gulp.dest('dist/js')
     ], cb);
+});
 
+// i18n
+gulp.task('i18n', function(cb) {
+    gulp.src('src/js/nls/**/*.*')
+        .pipe(gulp.dest('dist/js/nls'));
+    cb();
 });
 
 // html替换压缩
@@ -153,4 +159,5 @@ gulp.task('watch', function(){
 gulp.task('default', function(cb) {
     //gulp.start('js:main', 'requirejs', 'cleancss', 'image', 'htmlreplace');
     $.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'image'], 'htmlreplace')(cb);
+    //$.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'i18n', 'image'], 'htmlreplace')(cb);
 });

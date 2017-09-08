@@ -5,6 +5,25 @@
     buildCSS: false,
     inlineText : true,
 
+    config : {
+        i18n : {
+            locale : (function(){
+                try {
+                    var lang = 'en',
+                        reg=new RegExp('(^| )lang=([^;]*)(;|$)'),
+                        m = {'en':true, 'zh-cn': true},
+                        arr = document.cookie.match(reg);
+                    if(arr){lang = unescape(arr[2]);}
+                    if(!m[lang]) { lang = 'en';}
+                    return lang;
+                }
+                catch(e) {
+                    // 打包环境
+                }
+            })()
+        }
+    },
+
     map: {
         '*': {
             'css': 'requirejs/css.min'
@@ -35,6 +54,11 @@
 
     paths: {
         // lib
+        // requirejs
+        'text' : 'requirejs/text',
+        'i18n': 'requirejs/i18n',
+
+        // jquery
         'jquery': 'lib/jquery/jquery-3.1.0.min',
         'jquery.cookie': 'lib/jquery/jquery.cookie',
         'jquery.hammer': 'lib/jquery/jquery.hammer',
@@ -42,8 +66,6 @@
 
         'swiper': 'lib/swiper/swiper-3.4.2.jquery.min',
 
-        'text' : 'requirejs/text',
-        //'css' : 'requirejs/css.min',
         'bootstrap': 'lib/bootstrap/bootstrap-3.3.7.min',
 
         // app
