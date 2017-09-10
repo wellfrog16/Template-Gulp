@@ -11,8 +11,9 @@ gulp.task('clean', function(cb){
 });
 
 // 解析less文件
-const lessFilter = $.filter(['**/*.less', '!*src/style/common.less']);
 gulp.task('less', function(cb){
+    const lessFilter = $.filter(['**/*.less', '!*src/style/common.less']);
+
     gulp.src('src/style/*.less')
         .pipe(lessFilter)
         .pipe($.cache($.less()))
