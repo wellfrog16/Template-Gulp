@@ -52,6 +52,12 @@ gulp.task('image', () =>
         .pipe(gulp.dest('dist/asset/img'))
 );
 
+// copy 视音频
+gulp.task('video', () =>
+    gulp.src(['src/asset/**/*.mp4', 'src/asset/**/*.mp3'])
+        .pipe(gulp.dest('dist/asset'))
+);
+
 // AMD解析打包
 gulp.task('js:main', function () {
     gulp.src('src/js/app.js')
@@ -159,6 +165,6 @@ gulp.task('watch', function(){
 // 组合操作
 gulp.task('default', function(cb) {
     //gulp.start('js:main', 'requirejs', 'cleancss', 'image', 'htmlreplace');
-    $.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'image'], 'htmlreplace')(cb);
+    $.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'image', 'video'], 'htmlreplace')(cb);
     //$.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'i18n', 'image'], 'htmlreplace')(cb);
 });
