@@ -54,7 +54,7 @@ gulp.task('image', () =>
 
 // copy 视音频
 gulp.task('video', () =>
-    gulp.src(['src/asset/**/*.mp4', 'src/asset/**/*.mp3'])
+    gulp.src(['src/asset/video/**/*', 'src/asset/audio/**/*'])
         .pipe(gulp.dest('dist/asset'))
 );
 
