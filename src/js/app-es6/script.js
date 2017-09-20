@@ -1,27 +1,12 @@
 // 剧本
 
-define(['jquery', 'swiper', 'text!../template/test.html!strip', 'jquery.cookie', 'jquery.hammer'], function ($, swiper, testHtml) {
-    var self = {};
-
-    self.open = function () {
-        console.log('加载完成！');
-
-        $.cookie('QQ', '123456');
-
-
-        let a = '下一季，呵呵', b = '郑伊健312';
-
-        console.log($.cookie('QQ'));
-        console.log(a + b);
-
-        $('#qq').hammer().on('tap', function () {
-            $('body').append(testHtml);
-        });
-        
-        // $.Deferred
+define(['jquery', 'helper', 'text!../template/block.html!strip'], function ($, helper, htmlBlock) {
+    return () => {
+        // 如果是手机端，加载横屏提示
+        if (!helper.isPC) {
+            $('body').append(htmlBlock);
+        }
     };
-
-    return self;
 });
 
 

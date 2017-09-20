@@ -168,3 +168,8 @@ gulp.task('default', function(cb) {
     $.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'image', 'video'], 'htmlreplace')(cb);
     //$.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'i18n', 'image'], 'htmlreplace')(cb);
 });
+
+gulp.task('es6', function(cb) {
+    gulp.start('es6:helper', 'es6:app');
+    cb();
+});
