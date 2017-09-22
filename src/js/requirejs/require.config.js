@@ -60,8 +60,10 @@
         'i18n': 'requirejs/i18n',
 
         // jquery
-        'jquery': 'lib/jquery/jquery-3.1.0.min',
+        //'jquery': 'lib/jquery/jquery-3.1.0.min',
+        'jquery': 'lib/jquery/jquery-1.12.4.min',
         'jquery.cookie': 'lib/jquery/jquery.cookie',
+        'jquery.browser': 'lib/jquery/jquery.browser',
         'jquery.hammer': 'lib/jquery/jquery.hammer',
         'hammer': 'lib/jquery/hammer.min',
 
