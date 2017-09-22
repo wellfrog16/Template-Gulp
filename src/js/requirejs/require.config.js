@@ -54,6 +54,7 @@
 
     paths: {
         // lib
+        // ------------------------------------
         // requirejs
         'text' : 'requirejs/text',
         'i18n': 'requirejs/i18n',
@@ -68,7 +69,14 @@
 
         'bootstrap': 'lib/bootstrap/bootstrap-3.3.7.min',
 
+        'create': 'lib/createjs/createjs-2015.11.26.min',
+        'createjs': 'lib/createjs/createjs',
+
+        // helper
+        'helper': 'lib/helper/helper',
+
         // app
+        // ------------------------------------
         'script' : 'app/script'
     },
 
