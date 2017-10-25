@@ -7,6 +7,10 @@
         "amd": true
     },
     "extends": "eslint:recommended",
+    "parserOptions": {
+        "sourceType": "module",
+        "allowImportExportEverywhere": true
+    },
     "rules": {
         "no-console": "off",
         "comma-spacing": [2, {"before": false, "after": true}],

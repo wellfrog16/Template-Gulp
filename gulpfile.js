@@ -33,7 +33,6 @@ gulp.task('less', function(cb){
 gulp.task('cleancss', function(cb){
     gulp.src([
         'src/style/*.css',
-        'src/js/lib/swiper/*.css'
     ])
         .pipe($.concat('main.css'))
         .pipe($.cleanCss())

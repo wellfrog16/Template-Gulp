@@ -65,6 +65,7 @@
         'jquery.cookie': 'lib/jquery/jquery.cookie',
         'jquery.browser': 'lib/jquery/jquery.browser',
         'jquery.hammer': 'lib/jquery/jquery.hammer',
+        'jquery.fullPage': 'lib/jquery/jquery.fullPage',
         'hammer': 'lib/jquery/hammer.min',
 
         'swiper': 'lib/swiper/swiper-3.4.2.jquery.min',
@@ -86,6 +87,7 @@
         'bootstrap' : ['jquery'],
         //'bootstrap' : ['css!./lib/bootstrap/bootstrap-3.3.7.min.css'],
         'swiper': ['jquery', 'css!./lib/swiper/swiper-3.4.2.min.css'],
+        'jquery.fullPage' : ['jquery', 'css!./lib/jquery/jquery.fullPage.css'],
         'jquery.cookie' : ['jquery']
     },
 
