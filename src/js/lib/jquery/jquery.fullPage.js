@@ -8,15 +8,16 @@
 (function(global, factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
-        define(['jquery'], function($) {
-            return factory($, global, global.document, global.Math);
+        // requirejs支持IScroll
+        define(['jquery', 'scrolloverflow'], function($, scrolloverflow) {
+            return factory($, global, global.document, global.Math, scrolloverflow);
         });
     } else if (typeof exports === 'object' && exports) {
         module.exports = factory(require('jquery'), global, global.document, global.Math);
     } else {
         factory(jQuery, global, global.document, global.Math);
     }
-})(typeof window !== 'undefined' ? window : this, function($, window, document, Math, undefined) {
+})(typeof window !== 'undefined' ? window : this, function($, window, document, Math, IScroll, undefined) {
     'use strict';
 
     // keeping central set of classnames and selectors
@@ -2923,15 +2924,20 @@
 
     }; //end of $.fn.fullpage
 
+    // 修改为ie8 支持
     if(typeof IScroll !== 'undefined'){
         /*
         * Turns iScroll `mousewheel` option off dynamically
         * https://github.com/cubiq/iscroll/issues/1036
         */
         IScroll.prototype.wheelOn = function () {
-            this.wrapper.addEventListener('wheel', this);
-            this.wrapper.addEventListener('mousewheel', this);
-            this.wrapper.addEventListener('DOMMouseScroll', this);
+            // this.wrapper.addEventListener('wheel', this);
+            // this.wrapper.addEventListener('mousewheel', this);
+            // this.wrapper.addEventListener('DOMMouseScroll', this);
+
+            window.utils.addEvent(this.wrapper, 'wheel', this);
+            window.utils.addEvent(this.wrapper, 'mousewheel', this);
+            window.utils.addEvent(this.wrapper, 'DOMMouseScroll', this);
         };
 
         /*
@@ -2939,9 +2945,14 @@
         * https://github.com/cubiq/iscroll/issues/1036
         */
         IScroll.prototype.wheelOff = function () {
-            this.wrapper.removeEventListener('wheel', this);
-            this.wrapper.removeEventListener('mousewheel', this);
-            this.wrapper.removeEventListener('DOMMouseScroll', this);
+            // this.wrapper.removeEventListener('wheel', this);
+            // this.wrapper.removeEventListener('mousewheel', this);
+            // this.wrapper.removeEventListener('DOMMouseScroll', this);
+
+            window.utils.removeEvent(this.wrapper, 'wheel', this);
+            window.utils.removeEvent(this.wrapper, 'mousewheel', this);
+            window.utils.removeEvent(this.wrapper, 'DOMMouseScroll', this);
+
         };
     }
 
