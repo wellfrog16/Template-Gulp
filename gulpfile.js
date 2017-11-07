@@ -132,7 +132,8 @@ gulp.task('cdev', function() {
     // 设置服务器
     $.connect.server({
         root: 'src',
-        livereload: true
+        livereload: true,
+        port: 8001
     });
 });
 
