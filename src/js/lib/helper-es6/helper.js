@@ -15,7 +15,7 @@
             // },
 
             // 自动根据屏幕调整元素尺寸
-            fixPosition: function (options) {
+            autofixStyle: function (options) {
 
                 var args = {
                     baseWidth : $(document).width(),        // 元素原先参照容器宽度
