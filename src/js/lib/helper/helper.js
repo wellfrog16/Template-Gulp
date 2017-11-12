@@ -5,6 +5,49 @@ define(['jquery'], function ($) {
     //
     var self = {};
 
+    self.jqueryPlugin = function () {
+
+        $.fn.extend({
+            // animateCss: function (animationName) {
+            //     var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+            //     this.addClass('animated ' + animationName).one(animationEnd, function() {
+            //         //$(this).removeClass('animated ' + animationName);
+            //     });
+            //     return this;
+            // },
+
+            // 自动根据屏幕调整元素尺寸
+            fixPosition: function fixPosition(options) {
+
+                var args = {
+                    baseWidth: $(document).width(), // 元素原先参照容器宽度
+                    designWidth: $(document).width(), // 元素现在参照容器宽度
+                    changeFontSize: false
+                };
+
+                $.extend(args, options);
+
+                args.scaleNum = args.designWidth / args.baseWidth;
+
+                this.each(function (index, item) {
+                    var o = $(item),
+                        fix = o.attr('data-fixStyle') || 'top,left,bottom,right,width,height'; // 需要调整的方向，默认top-left
+
+                    var fixArray = fix.split(',');
+
+                    $.each(fixArray, function (index, item) {
+                        if (parseInt(o.css(item)) == 0) {
+                            return true;
+                        }
+                        o.css(item, args.scaleNum * parseInt(o.css(item)));
+                    });
+                });
+
+                return this;
+            }
+        });
+    };
+
     // 全局变量存储用
     self.variable = {};
 
