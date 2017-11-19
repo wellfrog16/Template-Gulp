@@ -41,43 +41,68 @@
 
 // ------------------------------------初始化-----------------------------------------
 html, body {
-    .percent-box();
+    width: 100%;
+    height: 100%;
 
     font-family: 'Miscrosoft Yahei', '微软雅黑';
     font-size:15px;
 
-    color:#fff;
-    background-color:#902;
+    color:#000;
+    background-color:#fff;
     overflow:hidden;
 }
 
 // ------------------------------------框架-----------------------------------------
 
 
-
 // ------------------------------------loading-----------------------------------------
 .loading {
-    .percent-box();
-
     position:absolute;
+    width: 100%;
+    height: 100%;
     text-align:center;
-    color:#333;
     top:0;
     left:0;
-    line-height:90vh;
+    //line-height:90vh;
     z-index:99;
-    background-color:#fff;
+    background-color:#f5e7da;
+
+    .movie {
+        margin: 30vh auto 0 auto;
+        width: 80px;
+        height: 143px;
+        background-image: url('../asset/img/main/loading.jpg');
+    }
+
+    .progress {
+        height:5px;
+        width:32vw;
+        border: 1px solid #d7b48c;
+        background-color:#FFF;
+
+        margin:10px auto 0 auto;
+        position: absolute;
+        bottom: 50px;
+        left: 34vw;
+        text-align: center;
+    }
+
+    .text {
+        position: absolute;
+        width: 100%;
+        height: 20px;
+        bottom: 60px;
+
+        span {
+            color: #d7b48c;
+            font-size: 10px;
+        }
+    }
+
+    .line {
+        height:3px;
+        width:0%;
+        background-color:#d7b48c;
+    }
 }
 
-// ------------------------------------test-----------------------------------------
-.test {
-    .absolute-box(640px, 320px, 100px, 0px, auto, auto);
-    background-image:url(../img/test.png);
-    background-repeat:no-repeat;
-    background-size:contain;
-    transform-origin:0 0 0;
-    display:none;
-    line-height:50px;
-    color:#f0f;
-    border-radius: 5px;
-}

@@ -2,6 +2,8 @@
 
 npm dedupe
 
+git remote show origin
+
 https://github.com/ai/browserslist#queries
 
 ```

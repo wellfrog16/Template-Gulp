@@ -5,7 +5,7 @@ define(['jquery'], function ($) {
     //
     var self = {};
 
-    self.jqueryPlugin = function () {
+    self.jqueryPlugins = function () {
 
         $.fn.extend({
             // animateCss: function (animationName) {
@@ -17,7 +17,7 @@ define(['jquery'], function ($) {
             // },
 
             // 自动根据屏幕调整元素尺寸
-            fixPosition: function fixPosition(options) {
+            autofixStyle: function autofixStyle(options) {
 
                 var args = {
                     baseWidth: $(document).width(), // 元素原先参照容器宽度
@@ -76,28 +76,11 @@ define(['jquery'], function ($) {
         return flag;
     }();
 
-    // 坐标修正
-    self.fixPosition = function (baseWidth) {
-
-        var scaleNum = document.documentElement.clientWidth / baseWidth;
-        var ele = $('.jsfix');
-
-        ele.each(function () {
-            var o = $(this),
-                fix = o.attr('data-fixPosi') || 'top-left',
-                // 需要调整的方向，默认top-left
-            size = o.attr('data-size') || 'yes'; // 是否需要大小调整，默认yes
-
-            var fixArray = fix.split('-');
-
-            if (size == 'yes') {
-                fixArray.push('width', 'height');
-            }
-
-            $.each(fixArray, function (index, item) {
-                o.css(item, scaleNum * parseInt(o.css(item)));
-            });
-        });
+    // 尝试执行函数
+    self.tryFun = function (fun) {
+        if (typeof fun === 'function') {
+            fun();
+        }
     };
 
     return self;

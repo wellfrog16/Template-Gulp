@@ -75,12 +75,17 @@
         'create': 'lib/createjs/createjs-2015.11.26.min',
         'createjs': 'lib/createjs/createjs',
 
+        //
+        'iscroll' : 'lib/iscroll/iscroll-5.2.0',
+
         // helper
         'helper': 'lib/helper/helper',
+        'frameplayer': 'lib/helper/frameplayer',
 
         // app
         // ------------------------------------
-        'script' : 'app/script'
+        'script' : 'app/script',
+        'loader' : 'app/loader'
     },
 
     shim: {

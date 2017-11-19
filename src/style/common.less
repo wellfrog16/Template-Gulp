@@ -15,54 +15,12 @@ ul, ol {
 img { border:0;}
 
 a { text-decoration:none;}
-// ------------------------------------初始化结束-----------------------------------------
 
-.percent-box(@width:100%, @height:100%) {
-    width:@width;
-    height:@height;
+.table {
+    display: table;
 }
 
-// 设置坐标
-.coordinate(@top, @right, @bottom, @left) when (isnumber(@top)) {top: @top;}
-.coordinate(@top, @right, @bottom, @left) when (isnumber(@right)) {right: @right;}
-.coordinate(@top, @right, @bottom, @left) when (isnumber(@bottom)) {bottom: @bottom;}
-.coordinate(@top, @right, @bottom, @left) when (isnumber(@left)) {left: @left;}
-
-
-// 绝对
-.absolute-box(@width, @height, @all) {
-    .absolute-box(@width,  @height, @all, @all, @all, @all)
-}
-
-.absolute-box(@width, @height, @top-bottom, @left-right) {
-    .absolute-box(@width,  @height, @top-bottom, @left-right, @top-bottom, @left-right)
-}
-
-.absolute-box(@width, @height, @top, @left-right, @bottom) {
-    .absolute-box(@width,  @height, @top, @left-right, @bottom, @left-right)
-}
-
-.absolute-box(@width, @height, @top, @right, @bottom, @left) {
-    .percent-box(@width, @height);    
-    .coordinate(@top, @right, @bottom, @left);
-    position:absolute;
-}
-
-// 相对
-.relative-box(@width, @height, @all) {
-    .relative-box(@width,  @height, @all, @all, @all, @all)
-}
-
-.relative-box(@width, @height, @top-bottom, @left-right) {
-    .relative-box(@width,  @height, @top-bottom, @left-right, @top-bottom, @left-right)
-}
-
-.relative-box(@width, @height, @top, @left-right, @bottom) {
-    .relative-box(@width,  @height, @top, @left-right, @bottom, @left-right)
-}
-
-.relative-box(@width, @height, @top, @right, @bottom, @left) {
-    .percent-box(@width, @height);   
-    .coordinate(@top, @right, @bottom, @left);
-    position:relative;
+.table-cell {
+    display: table-cell;
+    vertical-align: middle;
 }

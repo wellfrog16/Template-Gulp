@@ -1,39 +1,34 @@
 'use strict';
 
-define(function () {
+define(['jquery'], function ($) {
+    var self = function self(options) {
+        var args = {
+            target: null, // 对象
+            baseWidth: 640, //
+            scale: 1, // 缩放倍数
+            total: 0, // 总帧数
+            row: 0, // 一行几帧
+            fps: 0, // fps
+            loop: false, // 是否循环
+            loopDelay: 0, // 循环间隔帧数
+            loopTimes: -1, // 循环次数，-1为无限
+            finishedCallback: null, // 回调
+            loopCallback: null, // 循环回调
+            autosize: true, // 自适应
+            onProgress: function onProgress(frame) {} // 帧数变化时
 
-    /************************************************************
-    { 
-        target: 对象,
-        total : 总帧数,
-        row : 一行几个,
-        fps: 每秒帧数,
-        scale: 缩放倍数，默认  1
-        baseWidth : 640
-        loop : 是否循环,
-        loopDelay : 循环间隔帧数，默认0,
-        loopTimes : 循环次数，默认 无限,
-        finishedCallback: 回调,
-        loopCallback: 循环回调,
-        autoSize: 自适应，默认true
-    }
-    ***********************************************************/
-    var self = function self(args) {
-        var scale = args.scale || 1,
-            baseScale = document.documentElement.clientWidth / (args.baseWidth || 640);
+        };
 
-        args.width = args.width || args.target.width();
-        args.height = args.height || args.target.height();
-        args.loopDelay = args.loopDelay || 0;
-        args.loopTimes = args.loopTimes || -1;
-        args.autoSize = args.autoSize == undefined ? true : args.autoSize;
+        $.extend(args, options);
 
-        // 如果非自适应，将基础缩放定为1
-        if (!args.autoSize) {
-            baseScale = 1;
-        }
+        args.width = args.target.width();
+        args.height = args.target.height();
 
-        //if (args.autoSize)
+        var scale = args.scale,
+            baseScale = args.autosize ? document.documentElement.clientWidth / args.baseWidth : 1;
+
+        var flagPause = false;
+        var breaknum = -1;
 
         // 内部变量
         args.times = args.times || 0;
@@ -46,61 +41,87 @@ define(function () {
 
         var num = 0,
             delay = args.loopDelay;
-        var timer = setInterval(function () {
+        var timer = null;
 
-            //if (num++ < 0) { console.log(num); return }
-
-            if (num++ >= args.total - 1) {
-
-                // 有循环，且有循环回调，优先执行
-                if (args.loop && args.loopCallback && delay == args.loopDelay) {
-                    args.loopCallback(++args.times);
-
-                    // 有循环次数，则次数到达后退出
-                    if (args.times == args.loopTimes) {
-                        clearInterval(timer);
-
-                        // 执行结束回调
-                        if (args.finishedCallback) {
-                            args.finishedCallback();
-                        }
-
-                        // 结束函数
-                        return;
-                    }
-                }
-
-                // 延迟，空执行
-                if (delay > 0) {
-                    delay--;
+        function start() {
+            timer = setInterval(function () {
+                // 暂停，空循环。播放到指定帧，空循环。
+                if (flagPause || breaknum == num) {
                     return;
                 }
 
-                // 有循环
-                if (args.loop) {
-                    args.target.css('background-position', '0 0');
-                    num = 0;
-                    delay = args.loopDelay;
-                }
+                // 状态改变，返回帧数
+                args.onProgress(num + 1);
 
-                // 无循环
-                if (!args.loop) {
-                    clearInterval(timer);
-                }
+                // 完成循环时
+                if (num++ >= args.total - 1) {
 
-                // 无循环，且有 结束回调
-                if (!args.loop && args.finishedCallback) {
-                    args.finishedCallback();
-                }
-            } else {
-                var x = args.width * (num % args.row) * -1,
-                    y = args.height * parseInt(num / args.row) * -1;
+                    // 有循环，且有循环回调，优先执行
+                    if (args.loop && args.loopCallback && delay == args.loopDelay) {
+                        args.loopCallback(++args.times);
 
-                args.target.css('background-position', x + 'px ' + y + 'px');
+                        // 有循环次数，则次数到达后退出
+                        if (args.times == args.loopTimes) {
+                            clearInterval(timer);
+
+                            // 执行结束回调
+                            if (args.finishedCallback) {
+                                args.finishedCallback();
+                            }
+
+                            // 结束函数
+                            return;
+                        }
+                    }
+
+                    // 延迟，空执行
+                    if (delay > 0) {
+                        delay--;
+                        return;
+                    }
+
+                    // 有循环
+                    if (args.loop) {
+                        args.target.css('background-position', '0 0');
+                        num = 0;
+                        delay = args.loopDelay;
+                    }
+
+                    // 无循环
+                    if (!args.loop) {
+                        clearInterval(timer);
+                    }
+
+                    // 无循环，且有 结束回调
+                    if (!args.loop && args.finishedCallback) {
+                        args.finishedCallback();
+                    }
+                } else {
+                    var x = args.width * (num % args.row) * -1,
+                        y = args.height * parseInt(num / args.row) * -1;
+
+                    args.target.css('background-position', x + 'px ' + y + 'px');
+                }
+            }, 1000 / args.fps);
+        }
+
+        return {
+            pause: function pause() {
+                flagPause = true;
+            },
+            continue: function _continue() {
+                flagPause = false;
+            },
+            breakpoint: function breakpoint(n) {
+                breaknum = n;
+            },
+            play: function play() {
+                start();
+            },
+            stop: function stop() {
+                clearInterval(timer);
             }
-        }, 1000 / args.fps);
-
-        return timer;
+        };
     };
 
     return self;
