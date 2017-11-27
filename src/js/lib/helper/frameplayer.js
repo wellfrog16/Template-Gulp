@@ -1,22 +1,19 @@
-'use strict';
-
-define(['jquery'], function ($) {
-    var self = function self(options) {
+﻿define(['jquery'], $ => {
+    var self =  (options) => {
         var args = {
-            target: null, // 对象
-            baseWidth: 640, //
-            scale: 1, // 缩放倍数
-            total: 0, // 总帧数
-            row: 0, // 一行几帧
-            fps: 0, // fps
-            loop: false, // 是否循环
-            loopDelay: 0, // 循环间隔帧数
-            loopTimes: -1, // 循环次数，-1为无限
-            finishedCallback: null, // 回调
-            loopCallback: null, // 循环回调
-            autosize: true, // 自适应
-            onProgress: function onProgress(frame) {} // 帧数变化时
-
+            target : null,                  // 对象
+            baseWidth : 640,                //
+            scale : 1,                      // 缩放倍数
+            total : 0,                      // 总帧数
+            row : 0,                        // 一行几帧
+            fps : 0,                        // fps
+            loop : false,                   // 是否循环
+            loopDelay : 0,                  // 循环间隔帧数
+            loopTimes : -1,                 // 循环次数，-1为无限
+            finishedCallback : null,        // 回调
+            loopCallback : null,            // 循环回调
+            autosize : true,                // 自适应
+            onProgress(frame){ }            // 帧数变化时
         };
 
         $.extend(args, options);
@@ -27,8 +24,8 @@ define(['jquery'], function ($) {
         var scale = args.scale,
             baseScale = args.autosize ? document.documentElement.clientWidth / args.baseWidth : 1;
 
-        var flagPause = false;
-        var breaknum = -1;
+        let flagPause = false;
+        let breaknum = -1;
 
         // 内部变量
         args.times = args.times || 0;
@@ -39,90 +36,85 @@ define(['jquery'], function ($) {
         //args.target.css("transform-origin", '0px 0px 0px');
         args.target.show();
 
-        var num = 0,
-            delay = args.loopDelay;
+        var num = 0, delay = args.loopDelay;
         var timer = null;
 
         function start() {
-            timer = setInterval(function () {
+            timer = setInterval(() => {
                 // 暂停，空循环。播放到指定帧，空循环。
-                if (flagPause || breaknum == num) {
-                    return;
-                }
-
+                if (flagPause || breaknum == num) { return; }            
+    
                 // 状态改变，返回帧数
-                args.onProgress(num + 1);
-
+                args.onProgress(num+1);
+    
                 // 完成循环时
                 if (num++ >= args.total - 1) {
-
+    
                     // 有循环，且有循环回调，优先执行
                     if (args.loop && args.loopCallback && delay == args.loopDelay) {
                         args.loopCallback(++args.times);
-
+    
                         // 有循环次数，则次数到达后退出
                         if (args.times == args.loopTimes) {
                             clearInterval(timer);
-
+    
                             // 执行结束回调
-                            if (args.finishedCallback) {
-                                args.finishedCallback();
-                            }
-
+                            if (args.finishedCallback) { args.finishedCallback(); }
+    
                             // 结束函数
                             return;
                         }
                     }
-
+    
                     // 延迟，空执行
                     if (delay > 0) {
                         delay--;
                         return;
                     }
-
+    
                     // 有循环
                     if (args.loop) {
                         args.target.css('background-position', '0 0');
                         num = 0;
                         delay = args.loopDelay;
                     }
-
+    
+    
                     // 无循环
-                    if (!args.loop) {
-                        clearInterval(timer);
-                    }
-
+                    if (!args.loop) { clearInterval(timer); }
+    
                     // 无循环，且有 结束回调
-                    if (!args.loop && args.finishedCallback) {
-                        args.finishedCallback();
-                    }
-                } else {
+                    if (!args.loop && args.finishedCallback) { args.finishedCallback(); }
+                }
+                else {
                     var x = args.width * (num % args.row) * -1,
                         y = args.height * parseInt(num / args.row) * -1;
-
+    
                     args.target.css('background-position', x + 'px ' + y + 'px');
                 }
             }, 1000 / args.fps);
         }
 
+
         return {
-            pause: function pause() {
+            pause(){
                 flagPause = true;
             },
-            continue: function _continue() {
+            continue() {
                 flagPause = false;
             },
-            breakpoint: function breakpoint(n) {
+            breakpoint(n) {
                 breaknum = n;
             },
-            play: function play() {
+            play(){
                 start();
             },
-            stop: function stop() {
+            stop(){
                 clearInterval(timer);
             }
         };
     };
 
     return self;
+
 });

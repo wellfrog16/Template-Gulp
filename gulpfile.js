@@ -106,29 +106,26 @@ gulp.task('htmlreplace', function(cb) {
     cb();
 });
 
-// es6，处理深度：0
-gulp.task('es6:app', ()=>
-    gulp.src('src/js/app-es6/*.js')
+// 生成es5，处理深度：0
+gulp.task('es5:app', ()=>
+    gulp.src('src/js/app/*.js')
         .pipe($.cache($.babel({
             presets: ['es2015']
         })))
-        .pipe(gulp.dest('./src/js/app'))
+        .pipe(gulp.dest('./src/js/app-es5'))
 );
 
-gulp.task('es6:helper', ()=>
-    gulp.src('src/js/lib/helper-es6/*.js')
+gulp.task('es5:helper', ()=>
+    gulp.src('src/js/lib/helper/*.js')
         .pipe($.cache($.babel({
             presets: ['es2015']
         })))
-        .pipe(gulp.dest('./src/js/lib/helper'))
+        .pipe(gulp.dest('./src/js/lib/helper-es5'))
 );
 
 
 // 打开开发服务器
-gulp.task('cdev', function() {
-    // 开启监听
-    gulp.start('watch');
-
+gulp.task('cdev', ['watch', 'es5:helper', 'es5:app', 'less'], function() {
     // 设置服务器
     $.connect.server({
         root: 'src',
@@ -154,22 +151,23 @@ gulp.task('watch', function(){
     // less
     gulp.watch('./src/style/**/*.less', ['less']);
 
-    // es6
-    gulp.watch('./src/js/app-es6/*.js', ['es6:app']);
-    gulp.watch('./src/js/lib/helper-es6/*.js', ['es6:helper']);
+    // es5
+    gulp.watch('./src/js/app/*.js', ['es5:app']);
+    gulp.watch('./src/js/lib/helper/*.js', ['es5:helper']);
 
     // 自动刷新
-    gulp.watch(['./src/**/*.*', '!./src/**/*-es6/*.js', '!./src/**/*.less'], ['liveReload']);
+    gulp.watch(['./src/**/*.*', '!./src/**/helper/*.js', '!./src/**/app/*.js', '!./src/**/*.less'], ['liveReload']);
 });
 
 // 组合操作
 gulp.task('default', function(cb) {
     //gulp.start('js:main', 'requirejs', 'cleancss', 'image', 'htmlreplace');
-    $.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'image', 'video'], 'htmlreplace')(cb);
+    $.sequence('clean', 'es5', ['js:main', 'requirejs', 'cleancss', 'image', 'video'], 'htmlreplace')(cb);
     //$.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'i18n', 'image'], 'htmlreplace')(cb);
 });
 
-gulp.task('es6', function(cb) {
-    gulp.start('es6:helper', 'es6:app');
+// 转换为es5
+gulp.task('es5', function(cb) {
+    gulp.start('es5:helper', 'es5:app');
     cb();
 });

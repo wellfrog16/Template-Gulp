@@ -79,13 +79,13 @@
         'iscroll' : 'lib/iscroll/iscroll-5.2.0',
 
         // helper
-        'helper': 'lib/helper/helper',
-        'frameplayer': 'lib/helper/frameplayer',
+        'helper': 'lib/helper-es5/helper',
+        'frameplayer': 'lib/helper-es5/frameplayer',
 
         // app
         // ------------------------------------
-        'script' : 'app/script',
-        'loader' : 'app/loader'
+        'script' : 'app-es5/script',
+        'loader' : 'app-es5/loader'
     },
 
     shim: {
