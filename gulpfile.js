@@ -162,7 +162,7 @@ gulp.task('watch', function(){
 // 组合操作
 gulp.task('default', function(cb) {
     //gulp.start('js:main', 'requirejs', 'cleancss', 'image', 'htmlreplace');
-    $.sequence('clean', 'es5', ['js:main', 'requirejs', 'cleancss', 'image', 'video'], 'htmlreplace')(cb);
+    $.sequence('clean', ['es5:helper', 'es5:app'], ['js:main', 'requirejs', 'cleancss', 'image', 'video'], 'htmlreplace')(cb);
     //$.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'i18n', 'image'], 'htmlreplace')(cb);
 });
 
