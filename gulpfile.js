@@ -46,14 +46,14 @@ gulp.task('cleancss', function(cb){
 
 // 无损压缩图片
 gulp.task('image', () =>
-    gulp.src('src/asset/img/**/*')
+    gulp.src('src/assets/img/**/*')
         .pipe($.cache($.imagemin()))
-        .pipe(gulp.dest('dist/asset/img'))
+        .pipe(gulp.dest('dist/assets/img'))
 );
 
 // copy 视音频
 gulp.task('video', () =>
-    gulp.src(['src/asset/video/**/*', 'src/asset/audio/**/*'])
+    gulp.src(['src/assets/video/**/*', 'src/assets/audio/**/*'])
         .pipe(gulp.dest('dist/asset'))
 );
 
