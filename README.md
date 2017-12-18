@@ -3,6 +3,7 @@
 npm dedupe
 
 git remote show origin
+git remote prune origin
 
 https://github.com/ai/browserslist#queries
 
