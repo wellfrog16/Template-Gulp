@@ -67,6 +67,7 @@
         'jquery.hammer': 'lib/jquery/jquery.hammer',
         'jquery.fullPage': 'lib/jquery/jquery.fullPage',
         'hammer': 'lib/jquery/hammer.min',
+        'jquery.scrollTo': 'lib/jquery/jquery.scrollTo',
 
         'swiper': 'lib/swiper/swiper-3.4.2.jquery.min',
 
@@ -75,7 +76,10 @@
         'create': 'lib/createjs/createjs-2015.11.26.min',
         'createjs': 'lib/createjs/createjs',
 
-        //
+        // 轮播
+        'slick' : 'lib/slick/slick',
+
+        // 滚动条
         'iscroll' : 'lib/iscroll/iscroll-5.2.0',
 
         // helper

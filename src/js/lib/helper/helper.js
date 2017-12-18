@@ -71,7 +71,7 @@
 
     // 尝试执行函数
     self.tryFun = function(fun){
-        if (typeof fun === 'function') { fun(); }
+        if (typeof fun === 'function') { return fun(); }
     };
 
     return self;
