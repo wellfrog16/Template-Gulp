@@ -18,8 +18,8 @@
             autofixStyle: function (options) {
 
                 var args = {
-                    baseWidth : $(document).width(),        // 元素原先参照容器宽度
-                    designWidth : $(document).width(),      // 元素现在参照容器宽度
+                    baseWidth : $(window).width(),        // 元素原先参照容器宽度
+                    designWidth : $(window).width(),      // 元素现在参照容器宽度
                     changeFontSize : false
                 }
 
