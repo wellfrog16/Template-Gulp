@@ -18,10 +18,10 @@
             autofixStyle: function (options) {
 
                 var args = {
-                    baseWidth : $(document).width(),        // 元素原先参照容器宽度
-                    designWidth : $(document).width(),      // 元素现在参照容器宽度
+                    baseWidth : $(window).width(),        // 元素原先参照容器宽度
+                    designWidth : $(window).width(),      // 元素现在参照容器宽度
                     changeFontSize : false
-                }
+                };
 
                 $.extend(args, options);
 
@@ -71,7 +71,7 @@
 
     // 尝试执行函数
     self.tryFun = function(fun){
-        if (typeof fun === 'function') { fun(); }
+        if (typeof fun === 'function') { return fun(); }
     };
 
     return self;

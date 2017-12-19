@@ -1,12 +1,19 @@
 // 加载
 
 define([
+    'jquery',
     'createjs',
     'helper',
     'frameplayer',
-    'text!../template/loading.html!strip'],
-(createjs, helper, frameplayer, htmlLoading) => {
+    'text!../template/loading.html!strip',
+    'jquery.browser'],
+($, createjs, helper, frameplayer, htmlLoading) => {
     return (callback) => {
+
+        // 如果小于ie9，则取消loading（createjs不支持）;
+        if($.browser.msie && $.browser.version < 9) {            
+            return callback();
+        }
 
         // img标签方式加载图片
         var loader = new createjs.LoadQueue(false);
