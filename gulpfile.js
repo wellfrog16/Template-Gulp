@@ -16,7 +16,7 @@ gulp.task('less', function(cb){
 
     gulp.src('src/style/*.less')
         .pipe(lessFilter)
-        .pipe($.cache($.less()))
+        .pipe($.less())
         .pipe($.autoprefixer({
             browsers: ['last 3 versions', '>8%'],
             cascade: false,        // 美化属性，默认true
