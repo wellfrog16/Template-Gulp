@@ -11,7 +11,7 @@ define([
     return (callback) => {
 
         // 如果小于ie9，则取消loading（createjs不支持）;
-        if($.browser.msie && $.browser.version < 9) {            
+        if($.browser.msie && $.browser.version < 9) {
             return callback();
         }
 

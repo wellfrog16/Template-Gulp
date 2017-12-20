@@ -100,7 +100,7 @@
             pause(){
                 flagPause = true;
             },
-            continue() {
+            continued() {   // ie8 continue系统占用
                 flagPause = false;
             },
             breakpoint(n) {
