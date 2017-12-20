@@ -5,18 +5,26 @@ var del = require('del'),
     $ = require('gulp-load-plugins')();
 
 // 清除发布目录
-gulp.task('clean', function(cb){
+gulp.task('clean', (cb) =>{
     // 测试es6语法
-    del(['dist']).then(()=>{ cb(); });
+    del(['dist']).then(() =>{ cb(); });
 });
 
 // 解析less文件
-gulp.task('less', function(cb){
+gulp.task('less', (cb) =>{
     const lessFilter = $.filter(['**/*.less', '!*src/style/common.less']);
 
     gulp.src('src/style/*.less')
         .pipe(lessFilter)
         .pipe($.less())
+        // .pipe(cssUnit({
+        //     type: 'px-to-vw',
+        //     width: 750
+        // }))
+        // .pipe($.cssUnit({
+        //     type: 'px-to-rem',
+        //     rootSize: 50
+        // }))
         .pipe($.autoprefixer({
             browsers: ['last 3 versions', '>8%'],
             cascade: false,        // 美化属性，默认true
@@ -30,7 +38,7 @@ gulp.task('less', function(cb){
 
 
 // 合并压缩css文件
-gulp.task('cleancss', function(cb){
+gulp.task('cleancss', (cb) =>{
     gulp.src([
         'src/style/*.css',
     ])
@@ -58,7 +66,7 @@ gulp.task('video', () =>
 );
 
 // AMD解析打包
-gulp.task('js:main', function () {
+gulp.task('js:main', () =>
     gulp.src('src/js/app.js')
         .pipe($.requirejsOptimize({
             mainConfigFile: 'src/js/requirejs/require.config.js'
@@ -67,12 +75,12 @@ gulp.task('js:main', function () {
         // .pipe(rename(function(path){
         //     path.basename += '.min';
         // }))
-        .pipe(gulp.dest('dist/js'));
-});
+        .pipe(gulp.dest('dist/js'))
+);
 
 
 // requirejs合并
-gulp.task('requirejs', function(cb) {
+gulp.task('requirejs', (cb) =>{
 
     pump([
         gulp.src(['src/js/requirejs/require.js', 'src/js/requirejs/require.config.js'])
@@ -83,14 +91,14 @@ gulp.task('requirejs', function(cb) {
 });
 
 // i18n
-gulp.task('i18n', function(cb) {
+gulp.task('i18n', (cb) =>{
     gulp.src('src/js/nls/**/*.*')
         .pipe(gulp.dest('dist/js/nls'));
     cb();
 });
 
 // html替换压缩
-gulp.task('htmlreplace', function(cb) {
+gulp.task('htmlreplace', (cb) =>{
     gulp.src('src/index.html')
         .pipe($.htmlReplace({
             'js': ['js/require.combine.js', 'js/main.min.js'],
@@ -125,21 +133,21 @@ gulp.task('es5:helper', ()=>
 
 
 // 打开开发服务器
-gulp.task('cdev', ['watch', 'es5:helper', 'es5:app', 'less'], function() {
+gulp.task('cdev', ['watch', 'es5:helper', 'es5:app', 'less'], () =>
     // 设置服务器
     $.connect.server({
         root: 'src',
         livereload: true,
         port: 8001
-    });
-});
+    })
+);
 
 // 打开分发服务器
-gulp.task('cdist', function() {
+gulp.task('cdist', () =>
     $.connect.server({
         root: 'dist'
-    });
-});
+    })
+);
 
 gulp.task('liveReload', ()=>
     gulp.src('./src/**/*.html')
@@ -147,7 +155,7 @@ gulp.task('liveReload', ()=>
 );
 
 // 监听less和es6
-gulp.task('watch', function(){
+gulp.task('watch', () =>{
     // less
     gulp.watch('./src/style/**/*.less', ['less']);
 
@@ -160,14 +168,13 @@ gulp.task('watch', function(){
 });
 
 // 组合操作
-gulp.task('default', function(cb) {
+gulp.task('default', (cb) =>{
     //gulp.start('js:main', 'requirejs', 'cleancss', 'image', 'htmlreplace');
     $.sequence('clean', ['less', 'es5:helper', 'es5:app'], ['js:main', 'requirejs', 'cleancss', 'image', 'video'], 'htmlreplace')(cb);
     //$.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'i18n', 'image'], 'htmlreplace')(cb);
 });
 
 // 转换为es5
-gulp.task('es5', function(cb) {
-    gulp.start('es5:helper', 'es5:app');
-    cb();
-});
+gulp.task('es5', () =>
+    gulp.start('es5:helper', 'es5:app')
+);
