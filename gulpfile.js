@@ -59,10 +59,10 @@ gulp.task('image', () =>
         .pipe(gulp.dest('dist/assets/img'))
 );
 
-// copy 视音频
+// copy 视音频，如果在本地的话。注意.gitignore
 gulp.task('video', () =>
     gulp.src(['src/assets/video/**/*', 'src/assets/audio/**/*'])
-        .pipe(gulp.dest('dist/asset'))
+        .pipe(gulp.dest('dist/assets'))
 );
 
 // AMD解析打包
