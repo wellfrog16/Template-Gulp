@@ -13,13 +13,10 @@
             finishedCallback : null,        // 回调
             loopCallback : null,            // 循环回调
             autosize : true,                // 自适应
-            onProgress(frame){ }            // 帧数变化时
+            onProgress(frame){ return frame; }            // 帧数变化时
         };
 
         $.extend(args, options);
-
-        args.width = args.target.width();
-        args.height = args.target.height();
 
         var scale = args.scale,
             baseScale = args.autosize ? document.documentElement.clientWidth / args.baseWidth : 1;
@@ -86,11 +83,11 @@
                     // 无循环，且有 结束回调
                     if (!args.loop && args.finishedCallback) { args.finishedCallback(); }
                 }
-                else {
-                    var x = args.width * (num % args.row) * -1,
-                        y = args.height * parseInt(num / args.row) * -1;
-    
-                    args.target.css('background-position', x + 'px ' + y + 'px');
+                else {    
+                    var x = (num % args.row) * -100,
+                        y = parseInt(num / args.row) * -100;
+
+                    args.target.css('background-position', x + '% ' + y + '%');
                 }
             }, 1000 / args.fps);
         }

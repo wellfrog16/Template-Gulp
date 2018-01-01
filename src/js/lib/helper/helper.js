@@ -74,6 +74,49 @@
         if (typeof fun === 'function') { return fun(); }
     };
 
+    // 自动修正rem基数
+    self.fixRem = function(designWidth, radix){
+        var win = window;
+        var docEl = win.document.documentElement,
+            tid;
+
+        // 下面的640表示设计稿大小，50(px)是rem基数
+        designWidth = designWidth ? designWidth : 640;
+        radix = radix ? radix : 50;
+    
+        function refreshRem() {
+            // 获取当前窗口的宽度
+            var width = docEl.getBoundingClientRect().width;
+            // 大于640px 按640算
+            // if (width > 640) { width = 640; }
+
+            var rem = width / designWidth * radix;  // cms 只要把这行改成  var rem = width /640 * 100 
+            docEl.style.fontSize = rem + 'px';
+
+            //误差、兼容性处理
+            var actualSize = parseFloat(window.getComputedStyle(document.documentElement)['font-size']);
+            if (actualSize !== rem && actualSize > 0 && Math.abs(actualSize - rem) > 1) {
+                var remScaled = rem * rem / actualSize;
+                docEl.style.fontSize = remScaled + 'px';
+            }
+        }
+    
+        //函数节流，避免频繁更新
+        function dbcRefresh() {
+            clearTimeout(tid);
+            tid = setTimeout(refreshRem, 100);
+        }
+    
+        //窗口更新动态改变font-size
+        win.addEventListener('resize', function() { dbcRefresh(); }, false);
+    
+        //页面显示的时候再计算一次   难道切换窗口之后再切换来窗口大小会变?....
+        win.addEventListener('pageshow', function(e) {
+            if (e.persisted) { dbcRefresh(); }
+        }, false);
+        refreshRem();
+    };
+
     return self;
 
 });

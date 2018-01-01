@@ -5,7 +5,7 @@ define([
     'createjs',
     'helper',
     'frameplayer',
-    'text!../template/loading.html!strip',
+    'text!../views/loading.html!strip',
     'jquery.browser'],
 ($, createjs, helper, frameplayer, htmlLoading) => {
     return (callback) => {
@@ -44,8 +44,8 @@ define([
                 loopDelay: 0,
                 //loopTimes:3,
                 fps: 6,
-                //scale: 0.5,
-                autoSize : false,
+                scale: 1.5,
+                autosize : false,
                 onProgress(frame){
                     console.log(frame);
                 }
@@ -75,9 +75,9 @@ define([
             loader.loadManifest(source, true, 'assets/img/');
     
             function onComplete() {
-                t.stop();
-                $('.loading').fadeOut();
-                helper.tryFun(callback);
+                // t.stop();
+                // $('.loading').fadeOut();
+                // helper.tryFun(callback);
 
                 // console.log('资源加载完成');
             }

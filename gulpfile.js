@@ -15,16 +15,17 @@ gulp.task('less', (cb) =>{
     const lessFilter = $.filter(['**/*.less', '!*src/style/common.less']);
 
     gulp.src('src/style/*.less')
-        .pipe(lessFilter)
-        .pipe($.less())
+        .pipe(lessFilter)        
         // .pipe(cssUnit({
         //     type: 'px-to-vw',
         //     width: 750
         // }))
-        // .pipe($.cssUnit({
-        //     type: 'px-to-rem',
-        //     rootSize: 50
-        // }))
+        .pipe($.cssUnit({
+            type: 'px-to-rem',
+            rootSize: 50,
+            ignore: 1       // 非转换需要设置为，如10px 写成10*1px;
+        }))
+        .pipe($.less())
         .pipe($.autoprefixer({
             browsers: ['last 3 versions', '>8%'],
             cascade: false,        // 美化属性，默认true
@@ -60,7 +61,7 @@ gulp.task('image', () =>
 );
 
 // copy 视音频，如果在本地的话。注意.gitignore
-gulp.task('video', () =>
+gulp.task('audio', () =>
     gulp.src(['src/assets/video/**/*', 'src/assets/audio/**/*'])
         .pipe(gulp.dest('dist/assets'))
 );
@@ -170,7 +171,7 @@ gulp.task('watch', () =>{
 // 组合操作
 gulp.task('default', (cb) =>{
     //gulp.start('js:main', 'requirejs', 'cleancss', 'image', 'htmlreplace');
-    $.sequence('clean', ['less', 'es5:helper', 'es5:app'], ['js:main', 'requirejs', 'cleancss', 'image', 'video'], 'htmlreplace')(cb);
+    $.sequence('clean', ['less', 'es5:helper', 'es5:app'], ['js:main', 'requirejs', 'cleancss', 'image', 'audio'], 'htmlreplace')(cb);
     //$.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'i18n', 'image'], 'htmlreplace')(cb);
 });
 
