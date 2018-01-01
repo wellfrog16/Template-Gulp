@@ -33,6 +33,28 @@
         //args.target.css("transform-origin", '0px 0px 0px');
         args.target.show();
 
+        const fplayer = {
+            target: args.target,
+            pause(){
+                flagPause = true;
+            },
+            continued() {   // ie8 continue系统占用
+                flagPause = false;
+            },
+            breakpoint(n) {
+                breaknum = n;
+            },
+            play(){
+                start();
+            },
+            stop(){
+                clearInterval(timer);
+
+                // 执行结束回调
+                if (args.finishedCallback) { args.finishedCallback(fplayer); }
+            }
+        };
+
         var num = 0, delay = args.loopDelay;
         var timer = null;
 
@@ -49,14 +71,14 @@
     
                     // 有循环，且有循环回调，优先执行
                     if (args.loop && args.loopCallback && delay == args.loopDelay) {
-                        args.loopCallback(++args.times);
+                        args.loopCallback(fplayer, ++args.times);
     
                         // 有循环次数，则次数到达后退出
                         if (args.times == args.loopTimes) {
                             clearInterval(timer);
     
                             // 执行结束回调
-                            if (args.finishedCallback) { args.finishedCallback(); }
+                            if (args.finishedCallback) { args.finishedCallback(fplayer); }
     
                             // 结束函数
                             return;
@@ -81,7 +103,7 @@
                     if (!args.loop) { clearInterval(timer); }
     
                     // 无循环，且有 结束回调
-                    if (!args.loop && args.finishedCallback) { args.finishedCallback(); }
+                    if (!args.loop && args.finishedCallback) { args.finishedCallback(fplayer); }
                 }
                 else {    
                     var x = (num % args.row) * -100,
@@ -93,23 +115,7 @@
         }
 
 
-        return {
-            pause(){
-                flagPause = true;
-            },
-            continued() {   // ie8 continue系统占用
-                flagPause = false;
-            },
-            breakpoint(n) {
-                breaknum = n;
-            },
-            play(){
-                start();
-            },
-            stop(){
-                clearInterval(timer);
-            }
-        };
+        return fplayer;
     };
 
     return self;
