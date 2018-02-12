@@ -123,7 +123,7 @@ gulp.task('htmlreplace', (cb) =>{
 });
 
 // 生成es5，处理深度：0
-gulp.task('es5:app', ()=>
+gulp.task('es5:app', ['lint'], () =>
     gulp.src('src/js/app/*.js')
         .pipe($.cache($.babel({
             presets: ['es2015']
@@ -131,7 +131,7 @@ gulp.task('es5:app', ()=>
         .pipe(gulp.dest('./src/js/app-es5'))
 );
 
-gulp.task('es5:helper', ()=>
+gulp.task('es5:helper', ['lint'], () =>
     gulp.src('src/js/lib/helper/*.js')
         .pipe($.cache($.babel({
             presets: ['es2015']
@@ -139,9 +139,25 @@ gulp.task('es5:helper', ()=>
         .pipe(gulp.dest('./src/js/lib/helper-es5'))
 );
 
+gulp.task('lint', () => {
+    // ESLint ignores files with "node_modules" paths.
+    // So, it's best to have gulp ignore the directory as well.
+    // Also, Be sure to return the stream from the task;
+    // Otherwise, the task may end before the stream has finished.
+    return gulp.src(['./src/js/app/*.js', './src/js/lib/helper/*.js'])
+        // eslint() attaches the lint output to the "eslint" property
+        // of the file object so it can be used by other modules.
+        .pipe($.eslint())
+        // eslint.format() outputs the lint results to the console.
+        // Alternatively use eslint.formatEach() (see Docs).
+        .pipe($.eslint.formatEach())
+        // To have the process exit with an error code (1) on
+        // lint error, return the stream and pipe to failAfterError last.
+        .pipe($.eslint.failAfterError());
+});
 
 // 打开开发服务器
-gulp.task('cdev', ['watch', 'es5:helper', 'es5:app', 'less'], () =>
+gulp.task('dev', ['watch', 'es5:helper', 'es5:app', 'less'], () =>
     // 设置服务器
     $.connect.server({
         root: 'src',
@@ -151,19 +167,19 @@ gulp.task('cdev', ['watch', 'es5:helper', 'es5:app', 'less'], () =>
 );
 
 // 打开分发服务器
-gulp.task('cdist', () =>
+gulp.task('dist', () =>
     $.connect.server({
         root: 'dist'
     })
 );
 
-gulp.task('liveReload', ()=>
+gulp.task('liveReload', () =>
     gulp.src('./src/**/*.html')
         .pipe($.connect.reload())
 );
 
 // 监听less和es6
-gulp.task('watch', () =>{
+gulp.task('watch', () => {
     // less
     gulp.watch('./src/style/**/*.less', ['less']);
 
@@ -176,10 +192,10 @@ gulp.task('watch', () =>{
 });
 
 // 组合操作
-gulp.task('default', (cb) =>{
-    //gulp.start('js:main', 'requirejs', 'cleancss', 'image', 'htmlreplace');
+gulp.task('default', ['lint'], (cb) => {
+    // gulp.start('js:main', 'requirejs', 'cleancss', 'image', 'htmlreplace');
     $.sequence('clean', ['less', 'es5:helper', 'es5:app'], ['js:main', 'requirejs', 'cleancss', 'image', 'audio', 'video'], 'htmlreplace')(cb);
-    //$.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'i18n', 'image'], 'htmlreplace')(cb);
+    // $.sequence('clean', ['js:main', 'requirejs', 'cleancss', 'i18n', 'image'], 'htmlreplace')(cb);
 });
 
 // 转换为es5
