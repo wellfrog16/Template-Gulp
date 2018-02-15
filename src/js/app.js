@@ -1,7 +1,5 @@
-﻿require(['script'], function (script) {
-
+﻿require(['script'], function(script) {
     script();
-
 
     // 路由
     // var a = function(){
@@ -19,7 +17,7 @@
     //     }],
     //     '/b/:bookId': b
     // };
-    
+
     // var router = Router(routes);
 
     // router.init();

@@ -1,0 +1,13 @@
+/src/js/app-es5
+/src/js/lib/bootstap/*.js
+/src/js/lib/createjs/*.js
+/src/js/lib/helper-es5/*.js
+/src/js/lib/iscroll/*.js
+/src/js/lib/jquery/*.js
+/src/js/lib/slick/*.js
+/src/js/lib/swiper/*.js
+/src/js/nls/*.js
+/src/js/require/*.js
+/config/
+/dist/
+/*.js
