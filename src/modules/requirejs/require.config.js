@@ -52,6 +52,7 @@
     // },
 
     paths: {
+
         // lib
         // ------------------------------------
         // requirejs
@@ -60,7 +61,7 @@
 
         // jquery
         // 'jquery': 'lib/jquery/jquery-3.1.0.min',
-        'jquery': 'lib/jquery/jquery-1.12.4.min',
+        'jquery': '../modules/lib/jquery/jquery-1.12.4.min',
         'jquery.cookie': 'lib/jquery/jquery.cookie',
         'jquery.browser': 'lib/jquery/jquery.browser',
         'jquery.hammer': 'lib/jquery/jquery.hammer',
@@ -87,7 +88,6 @@
 
         // app
         // ------------------------------------
-        'script': 'app-es5/script',
         'loader': 'app-es5/loader'
     },
 

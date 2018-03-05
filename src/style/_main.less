@@ -1,0 +1,113 @@
+﻿//@import '../js/lib/bootstrap/less-3.3.7/bootstrap.less';
+@import 'common.less';
+
+// ------------------------------------横屏处理-----------------------------------------
+
+// ------------------------------------横屏处理-----------------------------------------
+
+@media screen and (orientation: portrait) {
+    /*竖屏 css*/
+    .block {
+        display: none;
+    }
+}
+
+@media screen and (orientation: landscape) {
+    /*横屏 css*/
+    .block {
+        z-index: 9999;
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        background: #333;
+        color: #fff;
+        text-align: center;
+        //line-height: 100vh;
+        font-size:16px;
+        //display: none;
+
+        img {
+            margin:12% 0 2% 0;
+            width:40%;
+        }
+
+        span {
+            display: block;
+        }
+    }
+}
+
+// ------------------------------------初始化-----------------------------------------
+html, body {
+    width: 100%;
+    height: 100%;
+
+    font-family: 'Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB','Microsoft YaHei','微软雅黑',Arial,sans-serif;
+
+    color:#000;
+    background-color:#fff;
+    overflow:hidden;
+}
+
+body {
+    font-size: 14px;
+}
+
+// ------------------------------------框架-----------------------------------------
+
+
+
+
+// ------------------------------------loading-----------------------------------------
+.loading {
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    text-align:center;
+    top:0;
+    left:0;
+    //line-height:90vh;
+    z-index:99;
+    background-color:#f5e7da;
+
+    .movie {
+        margin: 30vh auto 0 auto;
+        width: 80px;
+        height: 143px;
+        background-image: url('../assets/img/main/loading.jpg');
+    }
+
+    .progress {
+        height:1px * 5;
+        width:32vw;
+        border: 1px solid #d7b48c;
+        background-color:#FFF;
+
+        margin:10px auto 0 auto;
+        position: absolute;
+        bottom: 50px;
+        left: 34vw;
+        text-align: center;
+    }
+
+    .text {
+        position: absolute;
+        width: 100%;
+        height: 20px;
+        bottom: 60px;
+
+        span {
+            color: #d7b48c;
+            font-size: 10px;
+        }
+    }
+
+    .line {
+        height:1px * 3;
+        width:0%;
+        background-color:#d7b48c;
+    }
+}
+
