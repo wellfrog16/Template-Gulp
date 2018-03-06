@@ -1,5 +1,8 @@
 ## template-gulp
 
+npm i -g gulp
+npm i -g requirejs
+
 npm dedupe
 
 git remote show origin

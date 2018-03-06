@@ -1,4 +1,4 @@
-﻿require(['script'], function(script) {
+﻿require(['script'], (script) => {
     script();
 
     // 路由

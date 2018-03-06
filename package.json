@@ -29,13 +29,21 @@
         "eslint-plugin-promise": "^3.6.0",
         "eslint-plugin-standard": "^3.0.1",
         "gulp": "^3.9.1",
+        "gulp-autoprefixer": "^5.0.0",
         "gulp-babel": "^7.0.1",
         "gulp-cache": "^1.0.2",
         "gulp-changed": "^3.2.0",
+        "gulp-css-unit": "^1.2.2",
         "gulp-eslint": "^4.0.2",
         "gulp-filter": "^5.1.0",
+        "gulp-imagemin": "^4.1.0",
+        "gulp-less": "^4.0.0",
         "gulp-load-plugins": "^1.5.0",
-        "gulp-sequence": "^1.0.0"
+        "gulp-requirejs-optimize": "^1.2.0",
+        "gulp-sequence": "^1.0.0",
+        "gulp-stylelint": "^7.0.0",
+        "stylelint": "^9.1.1",
+        "stylelint-config-standard": "^18.2.0"
     },
     "dependencies": {}
 }
