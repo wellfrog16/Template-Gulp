@@ -39,10 +39,8 @@ gulp.task('watch', () => {
 
     // gulp.watch(path.html).on('change', reload);
 
-    // 监听html变化
     gulp.watch('./src/**/*.html', ['move-html']);
 
-    // 监听js模块变化
     for (const key of jsFolders) {
         gulp.watch(`./src/${key}/**/*.*`, [`move-${key}`]);
     }
@@ -50,7 +48,7 @@ gulp.task('watch', () => {
 
 gulp.task('dev', (cb) => {
     // $.sequence('clean-dev', ['move-html', 'move-modules', 'move-utils', 'move-helper', 'move-js'], 'server')(cb);
-    $.sequence('clean-dev', ['move-html', 'move-modules', 'move-utils', 'move-helper', 'move-js'], 'server')(cb);
+    $.sequence(['move-html', 'move-modules', 'move-utils', 'move-helper', 'move-js'], 'server')(cb);
 });
 
 // 移动html
@@ -69,23 +67,17 @@ gulp.task('move-modules', () => {
         .pipe(reload({stream: true}));
 });
 
-// 移动和eslint：utils, helper, js
+// 移动utils, helper, js
 for (const key of jsFolders.slice(0, 3)) {
-    // 移动
-    gulp.task(`move-${key}`, [`eslint-${key}`], () => {
-        gulp.src(`./src/${key}/**/*.*`)
+    gulp.task(`move-${key}`, () => {
+        return gulp.src(`./src/${key}/**/*.*`)
+            .pipe($.eslint())
+            .pipe($.eslint.formatEach())
+            // .pipe($.eslint.failAfterError())
             .pipe($.cache($.babel({ presets })))
             .pipe($.changed(`${distDev}/${key}`))
             .pipe(gulp.dest(`${distDev}/${key}`))
             .pipe(reload({stream: true}));
-    });
-
-    // eslint检查
-    gulp.task(`eslint-${key}`, () => {
-        return gulp.src(`./src/${key}/**/*.*`)
-            .pipe($.eslint())
-            .pipe($.eslint.formatEach())
-            .pipe($.eslint.failAfterError())
     });
 }
 

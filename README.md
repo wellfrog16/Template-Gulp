@@ -13,6 +13,8 @@ https://github.com/ai/browserslist#queries
     "workbench.iconTheme": "vscode-icons",
 
     "eslint.enable": true,
+
+    "eslint.autoFixOnSave": false,
     
     // "less.compile": {
     //     "compress":  true,  // true => remove surplus whitespace
@@ -21,18 +23,7 @@ https://github.com/ai/browserslist#queries
     //     "relativeUrls": false
     // },
 
-    "liveServer.settings.port": 0,
-
-    "liveServer.settings.ignoreFiles": [
-        ".vscode/**",
-        "**/*.scss",
-        "**/*.sass",
-        "**/*.less"
-    ],
-
-    "liveServer.settings.donotShowInfoMsg": true,
-
-       // A list of remote style sheets.
+    // A list of remote style sheets.
     "css.remoteStyleSheets": ["https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"],
 
     // A list of style sheet file extensions you want the extension to look for.

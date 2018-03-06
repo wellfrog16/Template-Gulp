@@ -23,8 +23,8 @@
 
 define([
     'jquery'],
-function($) {
-    return function() {
-        console.log(1122);
+($) => {
+    return () => {
+        console.log(1123);
     };
 });
