@@ -17,14 +17,7 @@ https://github.com/ai/browserslist#queries
 
     "eslint.enable": true,
 
-    "eslint.autoFixOnSave": false,
-    
-    // "less.compile": {
-    //     "compress":  true,  // true => remove surplus whitespace
-    //     "sourceMap": false,  // true => generate source maps (.css.map files)
-    //     "out":       true, // false => DON'T output .css files (overridable per-file, see below)
-    //     "relativeUrls": false
-    // },
+    "eslint.autoFixOnSave": true,
 
     // A list of remote style sheets.
     "css.remoteStyleSheets": ["https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"],

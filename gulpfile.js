@@ -1,6 +1,8 @@
 //导入工具包 require('node_modules里对应模块')
 const gulp = require('gulp');
 const del = require('del');
+const pump = require('pump');
+
 const $ = require('gulp-load-plugins')();
 const browserSync = require('browser-sync').create();
 const reload = browserSync.reload;
@@ -8,8 +10,15 @@ const reload = browserSync.reload;
 const distDev = './dist/dev';
 const distBuild = './dist/build';
 
-// const jsFolders = ['utils', 'helper', 'js', 'modules'];
-const jsFolders = { utils : 'utils', helper: 'helper', app: 'app', normal: '@(lib|nls)'};
+// 匹配
+const glob = {
+    lib: './src/js/@(lib|nls)/**/*', // lib + nls
+    script: ['./src/js/!(lib|nls)/**/*.js', './src/js/*.js'], // 与上一个匹配为整个js目录
+    media: './src/assets/@(video|audio)/**/*', // 视音频
+    image: './src/assets/img/**/*.@(jpg|jpeg|png|git)', // 图片
+    style: './src/style/**/*.*', // 样式
+    html: './src/**/*.html', //html
+};
 
 // 参考vue，es6解析设置
 const presets = [
@@ -19,17 +28,29 @@ const presets = [
     'stage-2'
 ];
 
-const path = {
-    js : ['./src/js/**/*.js', './src/js/helper/**/*.js', './src/js/utils/**/*.js'],
-    module: ['./src/modules/**/*.js'],
-    html: ['./src/*.html']
-}
+
+gulp.task('dev', (cb) => {
+    let move = [];
+    for (const key in glob) {
+        move.push(`move-${key}`)
+    }
+    $.sequence('clean-dev', move, 'server-dev')(cb);
+});
 
 // dev服务器
-gulp.task('server', ['watch'], () => {
+gulp.task('server-dev', ['watch'], () => {
     browserSync.init({
         server: {
-            baseDir: "./dist/dev"
+            baseDir: distDev
+        }
+    });
+});
+
+// build服务器
+gulp.task('server-build', () => {
+    browserSync.init({
+        server: {
+            baseDir: distBuild
         }
     });
 });
@@ -40,46 +61,22 @@ gulp.task('watch', () => {
 
     // gulp.watch(path.html).on('change', reload);
 
-    // 监听html变化
-    gulp.watch('./src/**/*.html', ['move-html']);
-
-    // 监听less变化
-    gulp.watch('./src/style/**/*.less', ['move-css']);
-
-    // 监听i18n变化
-    // gulp.watch('./src/nls/**/*.js', ['move-i18n']);
-
-    // 监听image变化
-    gulp.watch('./src/assets/img/**/*.*', ['move-image']);
-
-    // 监听audio变化
-    gulp.watch('./src/assets/audio/**/*.*', ['move-audio']);
-
-    // 监听video变化
-    gulp.watch('./src/assets/video/**/*.*', ['move-video']);
-
-    // 监听js模块变化
-    for (const key in jsFolders) {
-        gulp.watch(`./src/js/${jsFolders[key]}/**/*.*`, [`move-${key}`]);
+    for (const key in glob) {
+        gulp.watch(glob[key], [`move-${key}`]);
     }
-});
-
-gulp.task('dev', (cb) => {
-    // $.sequence('clean-dev', ['move-html', 'move-modules', 'move-utils', 'move-helper', 'move-js', 'move-i18n', 'move-css', 'move-image', 'move-audio', 'move-video'], 'server')(cb);
-    $.sequence('clean-dev', ['move-html', 'move-normal', 'move-utils', 'move-helper', 'move-app', 'move-css', 'move-image', 'move-audio', 'move-video'], 'server')(cb);
 });
 
 // 移动html
 gulp.task('move-html', () => 
-    gulp.src('./src/**/*.html')
+    gulp.src(glob.html)
         .pipe($.changed(distDev))
         .pipe(gulp.dest(distDev))
         .pipe(reload({stream: true}))
 );
 
-// 移动css
-gulp.task('move-css', ['stylelint'], () => 
-    gulp.src('./src/style/main.less')
+// 移动css，仅处理main.less
+gulp.task('move-style', ['stylelint'], () => 
+    gulp.src('./src/style/**/main.less')
         .pipe($.cssUnit({
             type: 'px-to-rem',
             rootSize: 50,
@@ -96,8 +93,8 @@ gulp.task('move-css', ['stylelint'], () =>
 );
 
 // stylelint检查
-gulp.task(`stylelint`, () => 
-    gulp.src(`./src/style/**/*.@(less|css)`)
+gulp.task('stylelint', () => 
+    gulp.src('./src/style/**/*.@(less|css)')
         .pipe($.stylelint({
             failAfterError: true,
             reporters: [
@@ -106,72 +103,34 @@ gulp.task(`stylelint`, () =>
         }))
 );
 
-// 移动非es6常规数据
-gulp.task('move-normal', () => 
-    gulp.src('./src/js/@(lib|nls)/**/*.*')
+// 移动非es6数据
+gulp.task('move-lib', () => 
+    gulp.src(glob.lib)
         .pipe($.changed(`${distDev}/js`))
         .pipe(gulp.dest(`${distDev}/js`))
         .pipe(reload({stream: true}))
 );
 
-// 移动modules
-gulp.task('move-modules', () => 
-    gulp.src('./src/modules/**/*.*')
-        .pipe($.changed(`${distDev}/modules`))
-        .pipe(gulp.dest(`${distDev}/modules`))
+// 移动解析es6
+gulp.task('move-script', ['eslint-script'], () => 
+    gulp.src(glob.script)
+        .pipe($.cache($.babel({ presets })))
+        .pipe($.changed(`${distDev}/js`))
+        .pipe(gulp.dest(`${distDev}/js`))
         .pipe(reload({stream: true}))
 );
 
-// 移动和eslint：utils, helper, js
-// for (const key of jsFolders.slice(0, 3)) {
-//     // 移动
-//     gulp.task(`move-${key}`, [`eslint-${key}`], () => 
-//         gulp.src(`./src/${key}/**/*.*`)
-//             .pipe($.cache($.babel({ presets })))
-//             .pipe($.changed(`${distDev}/${key}`))
-//             .pipe(gulp.dest(`${distDev}/${key}`))
-//             .pipe(reload({stream: true}))
-//     );
-
-//     // eslint检查
-//     gulp.task(`eslint-${key}`, () => 
-//         gulp.src(`./src/${key}/**/*.*`)
-//             .pipe($.eslint())
-//             .pipe($.eslint.formatEach())
-//             .pipe($.eslint.failAfterError())
-//     );
-// }
-for (const key in jsFolders) {
-    if (key === 'normal') { continue; }
-    // 移动
-    gulp.task(`move-${key}`, [`eslint-${key}`], () => 
-        gulp.src(`./src/js/${jsFolders[key]}/**/*.js`)
-            .pipe($.cache($.babel({ presets })))
-            .pipe($.changed(`${distDev}/js/${key}`))
-            .pipe(gulp.dest(`${distDev}/js/${key}`))
-            .pipe(reload({stream: true}))
-    );
-
-    // eslint检查
-    gulp.task(`eslint-${key}`, () => 
-        gulp.src(`./src/${jsFolders[key]}/**/*.js`)
-            .pipe($.eslint())
-            .pipe($.eslint.formatEach())
-            .pipe($.eslint.failAfterError())
-    );
-}
-
-// i18n
-gulp.task('move-i18n', () =>{
-    gulp.src('./src/nls/**/*.*')
-        .pipe($.changed(`${distDev}/nls`))
-        .pipe(gulp.dest(`${distDev}/nls`))
-        .pipe(reload({stream: true}))
-});
+// eslint检查
+gulp.task('eslint-script', () =>
+    gulp.src(glob.script)
+        .pipe($.eslint())
+        .pipe($.eslint.formatEach())
+        .pipe($.eslint.failAfterError())
+);
 
 // 移动并无损压缩图片
 gulp.task('move-image', () =>
-    gulp.src('./src/assets/img/**/*.@(jpg|jpeg|png|git)')
+    gulp.src(glob.image)
         .pipe($.cache($.imagemin()))
         .pipe($.changed(`${distDev}/assets/img`))
         .pipe(gulp.dest(`${distDev}/assets/img`))
@@ -179,19 +138,11 @@ gulp.task('move-image', () =>
 );
 
 // 视频音频，发布最好改成外链，而不是直接使用本地资源
-// 移动音频，如果在本地的话。注意.gitignore
-gulp.task('move-audio', () =>
-    gulp.src(['src/assets/audio/**/*'])
-        .pipe($.changed(`${distDev}/assets/audio`))
-        .pipe(gulp.dest(`${distDev}/assets/audio`))
-        .pipe(reload({stream: true}))
-);
-
-// 移动视频
-gulp.task('move-video', () =>
-    gulp.src(['src/assets/video/**/*'])
-        .pipe($.changed(`${distDev}/assets/video`))
-        .pipe(gulp.dest(`${distDev}/assets/video`))
+// 移动，如果在本地的话。注意.gitignore
+gulp.task('move-media', () =>
+    gulp.src(glob.media)
+        .pipe($.changed(`${distDev}/assets`))
+        .pipe(gulp.dest(`${distDev}/assets`))
         .pipe(reload({stream: true}))
 );
 
@@ -201,18 +152,71 @@ gulp.task('clean-build', (cb) => del([distBuild], cb));
 
 
 // -----------------------------------------------------------------
-// build
+// build by gulp-requirejs-optimize
 // -----------------------------------------------------------------
 
 // AMD解析打包
-gulp.task('abc', () =>
-    gulp.src('./dev/**/*.js')
+gulp.task('package', () =>
+    gulp.src(`${distDev}/js/app.js`)
         .pipe($.requirejsOptimize({
-            mainConfigFile: './dev/modules/requirejs/require.config.js'
+            mainConfigFile: './dist/dev/js/lib/requirejs/require.config.js'
         }))
-        // .pipe($.rename('main.min.js'))
+        // .pipe($.hash())
+        .pipe($.rename('app.min.js'))
         // .pipe(rename(function(path){
         //     path.basename += '.min';
         // }))
-        .pipe(gulp.dest('./dist/build'))
+        .pipe(gulp.dest(`${distBuild}/js`))
 );
+
+
+// requirejs合并
+gulp.task('requirejs', (cb) =>{
+    pump([
+        gulp.src([`${distDev}/js/lib/requirejs/require.js`, `${distDev}/js/lib/requirejs/require.config.js`])
+            .pipe($.concat('require.combine.js')),
+            // .pipe($.hash()),
+        $.uglify(),
+        gulp.dest(`${distBuild}/js`)
+    ], cb);
+});
+
+// html替换压缩
+gulp.task('htmlreplace', () =>
+    gulp.src(`${distDev}/index.html`)
+        .pipe($.htmlReplace({
+            'js': ['js/require.combine.js', 'js/app.min.js'],
+            'css': 'style/main.min.css'
+        }))
+        .pipe($.revHash({assetsDir: distBuild}))
+        // .pipe($.htmlmin({
+        //     removeComments: true,
+        //     collapseWhitespace: false
+        // }))
+        .pipe(gulp.dest(`${distBuild}`))
+);
+
+// 移动资源
+gulp.task('move-build-assets', () => {
+    gulp.src([`${distDev}/assets/**/*`])
+        .pipe(gulp.dest(`${distBuild}/assets`));
+});
+
+// 移动i18n
+gulp.task('move-build-i18n', () => {
+    gulp.src([`${distDev}/js/nls/**/*`])
+        .pipe(gulp.dest(`${distBuild}/js/nls`));
+});
+
+// 移动样式
+gulp.task('move-build-style', () => {
+    gulp.src(`${distDev}/style/**/*`)
+        .pipe($.cleanCss())
+        .pipe($.rename('main.min.css'))
+        .pipe(gulp.dest(`${distBuild}/style`));
+});
+
+// 组合操作
+gulp.task('build', ['clean-build'], (cb) => {
+    $.sequence(['package', 'requirejs', 'move-build-assets', 'move-build-i18n', 'move-build-style'], 'htmlreplace', 'server-build')(cb);
+});

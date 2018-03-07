@@ -60,6 +60,7 @@
         // 'text': 'requirejs/text',
         // 'i18n': 'requirejs/i18n',
 
+        '@': 'app',
         // jquery
         'jquery': 'lib/jquery/jquery-3.1.0.min',
         // 'jquery': '../modules/jquery/jquery-1.12.4.min',
