@@ -3,11 +3,11 @@
 define([
     'jquery',
     'createjs',
-    'helper',
-    'frameplayer',
-    'text!../views/loading.html!strip',
+    'utils/utils',
+    'utils/frameplayer',
+    'text!../../views/loading.html!strip',
     'jquery.browser'],
-($, createjs, helper, frameplayer, htmlLoading) => {
+($, createjs, utils, frameplayer, htmlLoading) => {
     return (callback) => {
         // 如果小于ie9，则取消loading（createjs不支持）;
         if ($.browser.msie && $.browser.version < 9) {
@@ -46,7 +46,7 @@ define([
                 scale: 1.5,
                 autosize: false,
                 onProgress(frame) {
-                    console.log(frame);
+                    // console.log(frame);
                 }
             });
 
@@ -75,7 +75,7 @@ define([
             function onComplete() {
                 // t.stop();
                 // $('.loading').fadeOut();
-                // helper.tryFun(callback);
+                // utils.tryFun(callback);
 
                 // console.log('资源加载完成');
             }

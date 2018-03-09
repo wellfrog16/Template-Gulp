@@ -13,10 +13,10 @@ const distBuild = './dist/build';
 // 匹配
 const glob = {
     lib: './src/js/@(lib|nls)/**/*', // lib + nls
-    script: ['./src/js/!(lib|nls)/**/*.js', './src/js/*.js'], // 与上一个匹配为整个js目录
+    script: ['./src/js/!(lib|nls)/**/*', './src/js/*'], // 与上一个匹配为整个js目录
     media: './src/assets/@(video|audio)/**/*', // 视音频
     image: './src/assets/img/**/*.@(jpg|jpeg|png|git)', // 图片
-    style: './src/style/**/*.*', // 样式
+    style: './src/style/**/*', // 样式
     html: './src/**/*.html', //html
 };
 
@@ -75,8 +75,9 @@ gulp.task('move-html', () =>
 );
 
 // 移动css，仅处理main.less
-gulp.task('move-style', ['stylelint'], () => 
-    gulp.src('./src/style/**/main.less')
+gulp.task('move-style', ['stylelint'], () => {
+
+    gulp.src('./src/style/main.less')
         .pipe($.cssUnit({
             type: 'px-to-rem',
             rootSize: 50,
@@ -90,7 +91,7 @@ gulp.task('move-style', ['stylelint'], () =>
         .pipe($.changed(`${distDev}/style`))
         .pipe(gulp.dest(`${distDev}/style`))
         .pipe(reload({stream: true}))
-);
+});
 
 // stylelint检查
 gulp.task('stylelint', () => 

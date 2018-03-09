@@ -1,4 +1,5 @@
-/src/modules/
-/src/nls/
+/src/js/lib/
+/src/js/nls/
+/repertory/
 /dist/
 /*.js

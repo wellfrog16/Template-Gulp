@@ -1,4 +1,4 @@
 define({
-    'en' : true,
-    'zh-cn' : true
+    'en': true,
+    'zh-cn': true
 })

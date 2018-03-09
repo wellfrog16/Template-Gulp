@@ -4,7 +4,8 @@
     "description": "模板文件",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "dev": "gulp dev",
+        "build": "gulp build"
     },
     "repository": {
         "type": "git",
@@ -37,7 +38,6 @@
         "gulp-concat": "^2.6.1",
         "gulp-css-unit": "^1.2.2",
         "gulp-eslint": "^4.0.2",
-        "gulp-filter": "^5.1.0",
         "gulp-hash": "^4.2.2",
         "gulp-html-replace": "^1.6.2",
         "gulp-htmlmin": "^4.0.0",
