@@ -1,5 +1,5 @@
 ﻿require(['@/script'], (script) => {
-    script();
+    script(1);
 
     // 路由
     // var a = function(){
