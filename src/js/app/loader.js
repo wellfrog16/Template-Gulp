@@ -22,6 +22,7 @@ define([
         // 关键！---一定要将其设置为 true, 否则不起作用。
         loader.maintainScriptOrder = true;
 
+        let elLoading = null;
         var source = [
             { 'src': 'main/landscape.png' },
             { 'src': 'main/loading.jpg' }
@@ -35,15 +36,17 @@ define([
         function onComplete() {
             $('body').append(htmlLoading);
 
+            elLoading = $('.g-loading');
+
             t = frameplayer({
-                target: $('.movie'),
+                target: elLoading.find('.movie'),
                 total: 66,
                 row: 10,
                 loop: true,
                 loopDelay: 0,
                 // loopTimes:3,
                 fps: 6,
-                scale: 1.5,
+                scale: 2,
                 autosize: false,
                 onProgress(frame) {
                     // console.log(frame);
@@ -74,7 +77,7 @@ define([
 
             function onComplete() {
                 // t.stop();
-                // $('.loading').fadeOut();
+                // $('.g-loading').fadeOut();
                 // utils.tryFun(callback);
 
                 // console.log('资源加载完成');
@@ -82,8 +85,8 @@ define([
 
             function onProgress() {
                 // console.log(loader.progress);
-                $('.loading span').text((loader.progress * 100 | 0) + ' %');
-                $('.loading .progress div').css('width', (loader.progress * 100 | 0) + '%');
+                elLoading.find('span').text((loader.progress * 100 | 0) + ' %');
+                elLoading.find('.progress div').css('width', (loader.progress * 100 | 0) + '%');
             }
         }
     };

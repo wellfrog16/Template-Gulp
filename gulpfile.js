@@ -20,7 +20,7 @@ const glob = {
     media: './src/assets/@(video|audio)/**/*', // 视音频
     image: './src/assets/img/**/*.@(jpg|jpeg|png|git)', // 图片
     style: './src/style/**/*', // 样式
-    html: './src/**/*.html', //html
+    html: './src/**/*.html' //html
 };
 
 // 参考vue，es6解析设置
@@ -36,8 +36,9 @@ for (const key in glob) {
     move.push(`move-${key}`)
 }
 
+// 目前gulp-less在监听状态下，更新import的文件修改无法被更新，暂时单独处理
 gulp.task('dev', (cb) => {
-    $.sequence('clean-dev', move, 'server-dev')(cb);
+    $.sequence('clean-dev', move, 'move-style', 'server-dev')(cb);
 });
 
 // dev服务器
@@ -76,6 +77,17 @@ gulp.task('watch', () => {
         $.watch(glob[key], { events: ['add', 'change'] }, (vinyl) => $.sequence(`move-${key}`)());
     }
 
+    // $.watch(['./src/style/**/*'], { events: ['add', 'change'] }, (vinyl) => {
+    //     return $.multiProcess(['move-style'], function(){
+    //         reload({stream: true});
+    //     });
+    // });
+
+    // gulp.watch('./src/style/**/*', () => $.multiProcess(['move-style'], reload));
+    // gulp.watch('./src/style/**/*', () => {
+    //     $.sequence(['move-style'])(reload);
+    // });
+
     // const msg = paths => console.log('\x1B[32m%s\x1B[39m', `[${paths}] have been rename or deleted.`);
     const msg = paths => console.log(`[${paths.toString().split('\\').pop()}] have been rename or deleted.`);
 
@@ -83,8 +95,10 @@ gulp.task('watch', () => {
     $.watch(glob.lib, { events: ['unlink'] }, (vinyl) => del(path.join(distDev, 'js', vinyl.relative)).then(paths => msg(paths)));
     $.watch(glob.script, { events: ['unlink'] }, (vinyl) => del(path.join(distDev, 'js', vinyl.relative)).then(paths => msg(paths)));
     $.watch(glob.media, { events: ['unlink'] }, (vinyl) => del(path.join(distDev, 'assets', vinyl.relative)).then(paths => msg(paths)));
-    $.watch(glob.style, { events: ['unlink'] }, () => $.sequence(`move-style`)());
+    // $.watch('./src/style/**/*', { events: ['unlink'] }, () => $.sequence(`move-style`)());
     $.watch(glob.html, { events: ['unlink'] }, (vinyl) => del(path.join(distDev, vinyl.relative)).then(paths => msg(paths)));
+
+    // todo 监视更新
 });
 
 // 移动html
@@ -108,12 +122,14 @@ gulp.task('move-style', ['stylelint'], () => {
         // }))
         .pipe(mainFilter)
         .pipe($.less())
-        .pipe($.postcss([
-            px2rem({
-                baseDpr: 1,
-                remUnit: 75
-            })
-        ]))
+        .pipe($.postcss(
+            [
+                px2rem({
+                    baseDpr: 1,
+                    remUnit: 64
+                })
+            ]
+        ))
         .pipe($.autoprefixer({
             browsers: ['last 3 versions', '>8%'],
             cascade: false,        // 美化属性，默认true
@@ -122,9 +138,10 @@ gulp.task('move-style', ['stylelint'], () => {
         .pipe(importFilter)
         .pipe($.less())
         .pipe(importFilter.restore)
-        .pipe($.changed(`${distDev}/style`))
+        // .pipe($.changed(`${distDev}/style`))        
         .pipe(gulp.dest(`${distDev}/style`))
-        .pipe(reload({stream: true}));
+        .pipe(reload({stream: true}))
+        // .pipe($.notify("Hello Gulp!"));
 });
 
 // stylelint检查
@@ -184,6 +201,7 @@ gulp.task('move-media', () =>
 // 清空文件夹
 gulp.task('clean-dev', (cb) => del([distDev], cb));
 gulp.task('clean-build', (cb) => del([distBuild], cb));
+gulp.task('clean-dev-style', (cb) => del([`${distDev}/style`], cb));
 
 
 // -----------------------------------------------------------------
