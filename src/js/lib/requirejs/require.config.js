@@ -69,8 +69,8 @@
 
         // jquery
         // ------------------------------------
-        // 'jquery': 'lib/jquery/jquery-3.3.1.min',
-        'jquery': 'lib/jquery/jquery-3.3.1.slim.min',
+        'jquery': 'lib/jquery/jquery-3.3.1.min',
+        // 'jquery': 'lib/jquery/jquery-3.3.1.slim.min',
         // 'jquery': 'lib/jquery/jquery-1.12.4.min',
         // 'jquery.cookie': 'lib/jquery/jquery.cookie',
         'jquery.browser': 'lib/jquery/jquery.browser',

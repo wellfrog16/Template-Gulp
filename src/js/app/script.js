@@ -20,7 +20,11 @@ define([
             $('body').append(htmlIndex);
             console.log('123');
 
-            music(false);
+            const a = music(false);
+
+            setInterval(() => {
+                console.log(a.playing);
+            }, 1000);
         });
     };
 });

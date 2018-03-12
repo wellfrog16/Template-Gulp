@@ -76,9 +76,9 @@ define([
             loader.loadManifest(source, true, 'assets/img/');
 
             function onComplete() {
-                // t.stop();
-                // $('.g-loading').fadeOut();
-                // utils.tryFun(callback);
+                t.stop();
+                elLoading.fadeOut();
+                utils.tryFun(callback);
 
                 // console.log('资源加载完成');
             }

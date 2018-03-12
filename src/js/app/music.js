@@ -8,37 +8,36 @@ define([
     return (autoplay) => {
         $('body').append(htmlMusic);
 
-        // 记录目前是否正在播放，全局
-        helper.variable.flagPlay = autoplay;
-
         const el = $('.sys-music .toggle');
         const audio = $('#h5-bg');
 
+        const handle = {
+            playing: autoplay,
+            play() {
+                handle.playing = true;
+                el.removeClass('pause').addClass('play');
+                audio[0].play();
+            },
+            pause() {
+                handle.playing = false;
+                el.removeClass('play').addClass('pause');
+                audio[0].pause();
+            }
+        };
+
         // 根据是否自动播放设置样式
-        if (autoplay) {
+        if (handle.playing) {
             el.removeClass('pause').addClass('play');
         } else {
             el.removeClass('play').addClass('pause');
         }
 
         el.hammer().on('tap', () => {
-            if (helper.variable.flagPlay) {
-                pause();
-            } else { play(); }
+            if (handle.playing) {
+                handle.pause();
+            } else { handle.play(); }
         });
 
-        function play() {
-            helper.variable.flagPlay = true;
-            el.removeClass('pause').addClass('play');
-            audio[0].play();
-        }
-
-        function pause() {
-            helper.variable.flagPlay = false;
-            el.removeClass('play').addClass('pause');
-            audio[0].pause();
-        }
-
-        return audio;
+        return handle;
     };
 });
