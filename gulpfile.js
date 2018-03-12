@@ -19,6 +19,7 @@ const glob = {
     script: ['./src/js/@(app|helper|utils)/**/*', './src/js/app.js'], // 与上一个匹配为整个js目录
     media: './src/assets/@(video|audio)/**/*', // 视音频
     image: './src/assets/img/**/*.@(jpg|jpeg|png|git)', // 图片
+    svg: './src/assets/svg/**/*.svg', // svg
     style: './src/style/**/*', // 样式
     html: './src/**/*.html' //html
 };
@@ -186,6 +187,14 @@ gulp.task('move-image', () =>
         .pipe($.cache($.imagemin()))
         .pipe($.changed(`${distDev}/assets/img`))
         .pipe(gulp.dest(`${distDev}/assets/img`))
+        .pipe(reload({stream: true}))
+);
+
+// 移动svg
+gulp.task('move-svg', () => 
+    gulp.src(glob.svg)
+        .pipe($.changed(`${distDev}/assets/svg`))
+        .pipe(gulp.dest(`${distDev}/assets/svg`))
         .pipe(reload({stream: true}))
 );
 

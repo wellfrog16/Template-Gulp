@@ -5,7 +5,7 @@ define([
     'createjs',
     'utils/utils',
     'utils/frameplayer',
-    'text!../../views/loading.html!strip',
+    'text!../components/loading.html!strip',
     'jquery.browser'],
 ($, createjs, utils, frameplayer, htmlLoading) => {
     return (callback) => {
@@ -36,7 +36,7 @@ define([
         function onComplete() {
             $('body').append(htmlLoading);
 
-            elLoading = $('.g-loading');
+            elLoading = $('.sys-loading');
 
             t = frameplayer({
                 target: elLoading.find('.movie'),

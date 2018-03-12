@@ -52,7 +52,7 @@
     // },
 
     paths: {
-        '@': 'app',
+        '@': 'app', // 废弃，这个加载方式会导致text!加载路径错误
 
         // requirejs
         // ------------------------------------
@@ -74,9 +74,10 @@
         // 'jquery': 'lib/jquery/jquery-1.12.4.min',
         // 'jquery.cookie': 'lib/jquery/jquery.cookie',
         'jquery.browser': 'lib/jquery/jquery.browser',
-        // 'jquery.hammer': 'lib/jquery/jquery.hammer',
+        'jquery.hammer': 'lib/jquery/jquery.hammer',
+        'hammer': 'lib/jquery/hammer.min',
         // 'jquery.fullPage': 'lib/jquery/jquery.fullPage',
-        // 'hammer': 'lib/jquery/hammer.min',
+        
         // 'jquery.scrollTo': 'lib/jquery/jquery.scrollTo',
 
         // 'swiper': 'lib/swiper/swiper-3.4.2.jquery.min',
@@ -93,9 +94,12 @@
         // 'utils': 'utils/helper',
         // 'frameplayer': 'lib/helper-es5/frameplayer',
 
-        // // app
-        // // ------------------------------------
-        // 'loader': 'app-es5/loader'
+        // app
+        // ------------------------------------
+        // js直接引用成app/xxx 会导致text!xxx.html加载路径错误
+        'loader': 'app/loader',
+        'script': 'app/script',
+        'music': 'app/music'
     },
 
     shim: {

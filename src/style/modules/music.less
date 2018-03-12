@@ -1,0 +1,23 @@
+// 旋转音乐按钮
+
+.sys-music {
+    .toggle {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        // background-image: url('../assets/img/icon/music.png');
+        background-image: url('../assets/svg/music.svg');
+        background-size: 100% auto;
+        top: 20px;
+        right: 20px;
+        z-index: 3;
+    }
+
+    .play {
+        animation: kf-rotate 2500ms linear infinite;
+    }
+
+    .pause {
+        background-position-y: -100%;
+    }
+}
