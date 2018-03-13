@@ -105,7 +105,11 @@ gulp.task('watch', () => {
 // 移动html
 gulp.task('move-html', () => 
     gulp.src(glob.html)
-        .pipe($.changed(distDev))
+        .pipe($.htmlmin({
+            removeComments: true,
+            collapseWhitespace: true
+        }))
+        // .pipe($.changed(distDev))
         .pipe(gulp.dest(distDev))
         .pipe(reload({stream: true}))
 );
