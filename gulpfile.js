@@ -39,7 +39,7 @@ for (const key in glob) {
 
 // 初始化移动整理文件
 gulp.task('dev', (cb) => {
-    $.sequence('clean-dev', move, 'move-style', 'server-dev')(cb);
+    $.sequence('clean-dev', move, 'server-dev')(cb);
 });
 
 // dev服务器
@@ -100,6 +100,7 @@ gulp.task('watch', () => {
     $.watch(glob.html, { events: ['unlink'] }, (vinyl) => del(path.join(distDev, vinyl.relative)).then(paths => msg(paths)));
 
     // todo 监视更新
+    // 等待gulp-less更新，目前4.0有bug
 });
 
 // 移动html
