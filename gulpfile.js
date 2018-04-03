@@ -37,7 +37,7 @@ for (const key in glob) {
     move.push(`move-${key}`)
 }
 
-// 目前gulp-less在监听状态下，更新import的文件修改无法被更新，暂时单独处理
+// 初始化移动整理文件
 gulp.task('dev', (cb) => {
     $.sequence('clean-dev', move, 'move-style', 'server-dev')(cb);
 });
@@ -114,7 +114,7 @@ gulp.task('move-html', () =>
         .pipe(reload({stream: true}))
 );
 
-// 移动css，仅处理main.less
+// 移动css
 gulp.task('move-style', ['stylelint'], () => {
     const mainFilter = $.filter('src/style/main.less', {restore: true});
     const importFilter = $.filter('src/style/import.less', {restore: true});
