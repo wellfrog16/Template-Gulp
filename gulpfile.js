@@ -258,7 +258,7 @@ gulp.task('htmlreplace', () =>
         .pipe($.revHash({assetsDir: distBuild}))
         .pipe($.htmlmin({
             removeComments: true,
-            collapseWhitespace: false
+            collapseWhitespace: true
         }))
         .pipe(gulp.dest(`${distBuild}`))
 );
