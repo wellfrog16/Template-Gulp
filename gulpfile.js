@@ -37,9 +37,9 @@ for (const key in glob) {
     move.push(`move-${key}`)
 }
 
-// 目前gulp-less在监听状态下，更新import的文件修改无法被更新，暂时单独处理
+// 初始化移动整理文件
 gulp.task('dev', (cb) => {
-    $.sequence('clean-dev', move, 'move-style', 'server-dev')(cb);
+    $.sequence('clean-dev', move, 'server-dev')(cb);
 });
 
 // dev服务器
@@ -100,21 +100,22 @@ gulp.task('watch', () => {
     $.watch(glob.html, { events: ['unlink'] }, (vinyl) => del(path.join(distDev, vinyl.relative)).then(paths => msg(paths)));
 
     // todo 监视更新
+    // 等待gulp-less更新，目前4.0有bug
 });
 
 // 移动html
 gulp.task('move-html', () => 
     gulp.src(glob.html)
-        .pipe($.htmlmin({
-            removeComments: true,
-            collapseWhitespace: true
-        }))
+        // .pipe($.htmlmin({
+        //     removeComments: true,
+        //     collapseWhitespace: true
+        // }))
         // .pipe($.changed(distDev))
         .pipe(gulp.dest(distDev))
         .pipe(reload({stream: true}))
 );
 
-// 移动css，仅处理main.less
+// 移动css
 gulp.task('move-style', ['stylelint'], () => {
     const mainFilter = $.filter('src/style/main.less', {restore: true});
     const importFilter = $.filter('src/style/import.less', {restore: true});
@@ -255,10 +256,10 @@ gulp.task('htmlreplace', () =>
             'css': ['style/main.min.css', 'style/import.min.css']
         }))
         .pipe($.revHash({assetsDir: distBuild}))
-        // .pipe($.htmlmin({
-        //     removeComments: true,
-        //     collapseWhitespace: false
-        // }))
+        .pipe($.htmlmin({
+            removeComments: true,
+            collapseWhitespace: false
+        }))
         .pipe(gulp.dest(`${distBuild}`))
 );
 
