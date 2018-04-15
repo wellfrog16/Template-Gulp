@@ -110,7 +110,7 @@ gulp.task('move-html', () =>
         //     removeComments: true,
         //     collapseWhitespace: true
         // }))
-        // .pipe($.changed(distDev))
+        .pipe($.changed(distDev))
         .pipe(gulp.dest(distDev))
         .pipe(reload({stream: true}))
 );
