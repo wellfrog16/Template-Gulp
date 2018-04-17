@@ -8,7 +8,7 @@ define([
     return (autoplay) => {
         $('body').append(htmlMusic);
 
-        const el = $('.sys-music .toggle');
+        const el = $('.sys-music .toggle i');
         const audio = $('#h5-bg');
 
         const handle = {

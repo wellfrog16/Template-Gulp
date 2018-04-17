@@ -24,8 +24,8 @@ define([
 
         let elLoading = null;
         var source = [
-            { 'src': 'main/landscape.png' },
-            { 'src': 'main/loading.jpg' }
+            { 'src': 'common/block/landscape.png' },
+            { 'src': 'common/loading/sprite.jpg' }
         ];
 
         loader.on('complete', onComplete);
@@ -68,7 +68,7 @@ define([
             loader.maintainScriptOrder = true;
 
             var source = [
-                { 'src': 'main/loading.jpg' }
+                { 'src': 'common/loading/sprite.jpg' }
             ];
 
             loader.on('progress', onProgress);

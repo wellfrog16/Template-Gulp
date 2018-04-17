@@ -1,1 +1,33 @@
 // icon图标样式专用less
+.icon {
+    background-size: contain;
+    display: inline-block;
+}
+
+// .icon-col(@url, @x) {
+//     background-image: url(@url);
+//     width: image-width(@url);
+//     height: image-height(@url);
+//     max-width: image-width(@url); /*no*/
+//     max-height: image-height(@url); /*no*/
+// }
+
+.icon-col-active {
+    background-position-y: -100%;
+}
+
+.icon-row-active {
+    background-position-x: -100%;
+}
+
+// 音乐
+.icon-music {
+    @url: '../assets/img/common/icon/icon-music.png';
+
+    background-image: data-uri(@url);
+    background-size: 100% auto;
+    width: image-width(@url);
+    height: image-height(@url) / 2;
+    max-width: image-width(@url); /*no*/
+    max-height: image-height(@url) / 2; /*no*/
+}
