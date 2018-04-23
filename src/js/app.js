@@ -1,4 +1,8 @@
-﻿require(['script'], (script) => {
+﻿require(['jquery', 'script', 'helper/lakers'], ($, script) => {
+    const world = window.mWorld;
+
+    // 设置根节点
+    world.root = $('body');
     script(1);
 
     // 路由

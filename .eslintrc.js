@@ -13,7 +13,7 @@ module.exports = {
     "amd": true
   },
   globals: {
-    vue: true,
+    mWorld: true,
     wx: true
   },
   // https://github.com/standard/standard/blob/master/docs/RULES-en.md

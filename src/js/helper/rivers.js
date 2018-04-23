@@ -3,5 +3,5 @@ define(() => {
 
     if (!window.mWorld) { window.mWorld = {}; }
 
-    window.mWorld.lakers = self;
+    window.mWorld.rivers = self;
 });

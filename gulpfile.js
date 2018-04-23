@@ -104,16 +104,20 @@ gulp.task('watch', () => {
 });
 
 // 移动html
-gulp.task('move-html', () => 
+gulp.task('move-html', () => {
+    const componentFilter = $.filter('src/components/**/*', {restore: true});
+
     gulp.src(glob.html)
-        // .pipe($.htmlmin({
-        //     removeComments: true,
-        //     collapseWhitespace: true
-        // }))
+        .pipe(componentFilter)
+        .pipe($.htmlmin({
+            removeComments: true,
+            collapseWhitespace: true
+        }))
+        .pipe(componentFilter.restore)
         .pipe($.changed(distDev))
         .pipe(gulp.dest(distDev))
         .pipe(reload({stream: true}))
-);
+});
 
 // 移动css
 gulp.task('move-style', ['stylelint'], () => {

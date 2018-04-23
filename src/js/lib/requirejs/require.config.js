@@ -97,9 +97,18 @@
         // app
         // ------------------------------------
         // js直接引用成app/xxx 会导致text!xxx.html加载路径错误
-        'loader': 'app/loader',
+        // 'lakers': 'helper/lakers',
+        // 'rivers': 'helper/rivers',
+
+        'block': 'app/common/block',
+        'music': 'app/common/music',
+        'loader': 'app/common/loader',
+        'video': 'app/common/video',
+
+        'source' : 'app/source',
+        'index' : 'app/index',
+
         'script': 'app/script',
-        'music': 'app/music'
     },
 
     shim: {

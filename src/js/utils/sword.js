@@ -1,6 +1,5 @@
-﻿define(['jquery'], ($) => {
-    //
-    var self = {};
+define(['jquery'], ($) => {
+    const self = {};
 
     self.jqueryPlugins = function() {
         $.fn.extend({
@@ -39,9 +38,6 @@
         });
     };
 
-    // 全局变量存储用
-    self.variable = {};
-
     // 获得url参数
     self.getUrlParam = function(name) {
         var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)'); // 构造一个含有目标参数的正则表达式对象
@@ -65,8 +61,17 @@
     })();
 
     // 尝试执行函数
-    self.tryFun = function(fun) {
+    self.tryFun = fun => {
         if (typeof fun === 'function') { return fun(); }
+    };
+
+    // 判断数字
+    self.isNum = val => {
+        // isNaN()函数 把空串 空格 以及NUll 按照0来处理 所以先去除
+        if (val === '' || val === null) {
+            return false;
+        }
+        return !isNaN(val);
     };
 
     // 自动修正rem基数
@@ -77,7 +82,7 @@
 
         // 下面的640表示设计稿大小，50(px)是rem基数
         designWidth = designWidth || 640;
-        radix = radix || 50;
+        radix = radix || 64;
 
         function refreshRem() {
             // 获取当前窗口的宽度
@@ -112,5 +117,6 @@
         refreshRem();
     };
 
-    return self;
+    if (!window.mWorld) { window.mWorld = {}; }
+    window.mWorld.sword = self;
 });

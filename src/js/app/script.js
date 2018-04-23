@@ -2,39 +2,29 @@
 
 define([
     'jquery',
-    'utils/utils',
-    'loader',
+    'block',
     'music',
-    'text!../components/block.html!strip',
-    'text!../components/index.html!strip'],
-($, utils, loader, music, htmlBlock, htmlIndex) => {
+    'loader',
+    'video',
+    'index',
+    'utils/sword'],
+($) => {
     return () => {
+        const world = window.mWorld;
+        const sword = world.sword;
         // 加载jquery插件
-        utils.jqueryPlugins();
-        utils.fixRem();
+        sword.jqueryPlugins();
+        // 自动修正rem
+        sword.fixRem();
 
         // 如果是手机端，加载横屏提示
-        if (!utils.isPC) { $('body').append(htmlBlock); }
+        if (!sword.isPC) { world.lakers.$block.mount(); }
 
-        loader(() => {
-            $('body').append(htmlIndex);
-            console.log('123');
-
-            const a = music(false);
-
-            setInterval(() => {
-                console.log(a.playing);
-            }, 1000);
+        world.lakers.$music.mount(false);
+        world.lakers.$loader.mount(() => {
+            console.log('回调');
+            // world.lakers.$video.mount($('body'));
+            world.rivers.$index.mount();
         });
     };
 });
-
-// const modules = ['jquery', 'utils/utils'];
-
-// define(modules,
-//     ($, utils) => {
-//         return () => {
-//             console.log(1123);
-//         };
-//     }
-// );
