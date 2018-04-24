@@ -1,3 +1,4 @@
+@import '../../config.less';
 // ------------------------------------横屏处理-----------------------------------------
 
 @media screen and (orientation: portrait) {
@@ -22,9 +23,16 @@
         font-size: 16px;
         //display: none;
 
-        img {
-            margin: 12% 0 2% 0;
-            width: 40%;
+        .tips {
+            @localUrl: '@{g-localUrl}/assets/img/common/block/landscape.png';
+
+            width: image-width(@localUrl) / 2; /*no*/
+            height: image-height(@localUrl) / 2; /*no*/
+            background: data-uri(@localUrl) no-repeat center;
+            background-size: contain;
+            margin: 14% auto 5% auto;
+            transform: rotate(90deg);
+            animation: kf-block 1.6s linear infinite;
         }
 
         span {
