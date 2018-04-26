@@ -67,6 +67,9 @@
         // 修改createjs来决定加载createjs的什么模块
         'createjs': 'lib/createjs/createjs',
 
+        // pixi
+        'pixi': 'lib/pixi/pixi.min',
+
         // jquery
         // ------------------------------------
         'jquery': 'lib/jquery/jquery-3.3.1.min',
@@ -93,6 +96,7 @@
         // helper
         // 'utils': 'utils/helper',
         // 'frameplayer': 'lib/helper-es5/frameplayer',
+        // 'spriteplayer': 'lib/utils/spriteplayer',
 
         // app
         // ------------------------------------
@@ -102,7 +106,8 @@
 
         'block': 'app/common/block',
         'music': 'app/common/music',
-        'loader': 'app/common/loader',
+        // 'loader': 'app/common/loader-createjs',
+        'loader': 'app/common/loader-pixi',
         'video': 'app/common/video',
 
         'source' : 'app/source',

@@ -1,4 +1,4 @@
-// 加载
+// createjs loader加载
 
 define([
     'jquery',
