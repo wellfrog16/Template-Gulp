@@ -10,7 +10,7 @@ define([
     'helper/lakers',
     'utils/sword'],
 ($, createjs, frameplayer, source, htmlLoader) => {
-    const world = mWorld;
+    const world = myWorld;
     const laker = {};
 
     let callback = null;

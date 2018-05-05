@@ -5,7 +5,7 @@ define([
     'jquery.hammer',
     'helper/lakers'],
 (htmlMusic) => {
-    const world = mWorld;
+    const world = myWorld;
     const laker = {};
 
     let audio = null;

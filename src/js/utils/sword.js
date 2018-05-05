@@ -117,6 +117,6 @@ define(['jquery'], ($) => {
         refreshRem();
     };
 
-    if (!window.mWorld) { window.mWorld = {}; }
-    window.mWorld.sword = self;
+    if (!window.myWorld) { window.myWorld = {}; }
+    window.myWorld.sword = self;
 });

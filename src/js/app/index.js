@@ -5,7 +5,7 @@ define([
     'helper/rivers',
     'utils/sword'],
 (htmlBlock) => {
-    const world = mWorld;
+    const world = myWorld;
     const river = {};
 
     // 挂载

@@ -10,7 +10,7 @@ define([
     'helper/lakers',
     'utils/sword'],
 ($, PIXI, spriteplayer, source, htmlLoader) => {
-    const world = mWorld;
+    const world = myWorld;
     const laker = {};
 
     // let callback = null;

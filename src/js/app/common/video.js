@@ -4,7 +4,7 @@ define([
     'helper/lakers',
     'block'],
 (htmlVideo) => {
-    const world = mWorld;
+    const world = myWorld;
     const laker = {};
 
     let button = null;

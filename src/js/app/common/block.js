@@ -5,7 +5,7 @@ define([
     'helper/lakers',
     'utils/sword'],
 (htmlBlock) => {
-    const world = mWorld;
+    const world = myWorld;
     const laker = {};
 
     // 挂载

@@ -1,7 +1,7 @@
 define(() => {
     const self = {};
 
-    if (!window.mWorld) { window.mWorld = {}; }
+    if (!window.myWorld) { window.myWorld = {}; }
 
-    window.mWorld.lakers = self;
+    window.myWorld.lakers = self;
 });

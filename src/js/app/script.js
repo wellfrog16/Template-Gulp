@@ -10,7 +10,7 @@ define([
     'utils/sword'],
 ($) => {
     return () => {
-        const world = window.mWorld;
+        const world = window.myWorld;
         const sword = world.sword;
         // 加载jquery插件
         sword.jqueryPlugins();
