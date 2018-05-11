@@ -8,6 +8,8 @@
       "max-nesting-depth": 3,
       "string-quotes": "single",
       "function-url-quotes": "always",
-      "selector-list-comma-newline-after": "never-multi-line"
+      "selector-list-comma-newline-after": "never-multi-line",
+      "no-descending-specificity": null,
+      "no-missing-end-of-source-newline": null
   }
 }

@@ -27,7 +27,8 @@ const glob = {
 // 参考vue，es6解析设置
 const presets = [
     ['env', {
-        'modules': false
+        'modules': false,
+        'loose': true
     }],
     'stage-2'
 ];
@@ -176,8 +177,9 @@ gulp.task('move-lib', () =>
 // 移动解析es6
 gulp.task('move-script', ['eslint-script'], () => 
     gulp.src(glob.script)
-        .pipe($.cache($.babel({ presets })))
-        .pipe($.changed(`${distDev}/js`))
+        .pipe($.babel({ presets }))
+        // .pipe($.cache($.babel({ presets })))
+        // .pipe($.changed(`${distDev}/js`))
         .pipe(gulp.dest(`${distDev}/js`))
         .pipe(reload({stream: true}))
 );
