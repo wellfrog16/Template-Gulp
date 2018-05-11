@@ -177,9 +177,8 @@ gulp.task('move-lib', () =>
 // 移动解析es6
 gulp.task('move-script', ['eslint-script'], () => 
     gulp.src(glob.script)
-        .pipe($.babel({ presets }))
-        // .pipe($.cache($.babel({ presets })))
-        // .pipe($.changed(`${distDev}/js`))
+        .pipe($.cache($.babel({ presets })))
+        .pipe($.changed(`${distDev}/js`))
         .pipe(gulp.dest(`${distDev}/js`))
         .pipe(reload({stream: true}))
 );
