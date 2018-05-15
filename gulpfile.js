@@ -18,7 +18,7 @@ const glob = {
     // script: ['./src/js/!(lib|nls)/**/*', './src/js/*'], // 与上一个匹配为整个js目录，注 gulp-watch无法匹配
     script: ['./src/js/@(app|helper|utils)/**/*', './src/js/app.js'], // 与上一个匹配为整个js目录
     media: './src/assets/@(video|audio)/**/*', // 视音频
-    image: './src/assets/img/**/*.@(jpg|jpeg|png|git)', // 图片
+    image: './src/assets/img/**/*.@(jpg|jpeg|png|gif)', // 图片
     svg: './src/assets/svg/**/*.svg', // svg
     style: './src/style/**/*', // 样式
     html: './src/**/*.html' //html
