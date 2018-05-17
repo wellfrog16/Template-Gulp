@@ -4,3 +4,4 @@ dist/
 *.mp3
 *-es5/
 src/style/*.css
+.vscode
