@@ -13,6 +13,8 @@ define([
     const world = myWorld;
     const laker = {};
 
+    let anim = null;
+
     // let callback = null;
     // let movie = null;
 
@@ -40,9 +42,36 @@ define([
             world.root.append(htmlLoader);
             this.$root = world.root.find('.sys-loader');
 
-            setTimeout(() => {
-                spriteplayer();
-            }, 0);
+            let imgSource = [];
+
+            for (let i = 1; i <= 66; i++) {
+                let zero = '';
+                for (let j = 0; j < 2 - i.toString().length; j++) {
+                    zero += '0';
+                }
+
+                imgSource.push(`assets/img/common/loader/sprite/${zero + i}.jpg`);
+            }
+
+            anim = spriteplayer({
+                target: $('.movie'),
+                source: imgSource
+            });
+
+            // anim.loop = false;
+            anim.cursor = 'pointer';
+            // anim.scale = new PIXI.Point(0.1, 0.1);
+            anim.animationSpeed = 0.12;
+            anim.onLoop = function() {
+                console.log('循环');
+            };
+            anim.onComplete = function() {
+                console.log('finished');
+            };
+            anim.onFrameChange = function() {
+                console.log(anim.currentFrame);
+            };
+            anim.play();
             this.mainload();
         });
     };
@@ -57,6 +86,9 @@ define([
 
         loader.load((loader, resources) => {
             console.log('加载完成');
+            anim.destroy();
+            this.destroy();
+            // anim.stop();
         });
 
         loader.onProgress.add(loader => {
@@ -70,10 +102,6 @@ define([
         this.$root.remove();
         this.$root = null;
     };
-
-    // function createjsLoader() {
-
-    // }
 
     world.lakers.$loader = laker;
     return laker;

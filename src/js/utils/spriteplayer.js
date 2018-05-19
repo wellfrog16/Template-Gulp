@@ -1,26 +1,33 @@
 define(['jquery', 'pixi'], ($, PIXI) => {
-    var self = () => {
-        var app = new PIXI.Application($('.movie').width(), $('.movie').height(), { transparent: true });
-        $('.movie')[0].appendChild(app.view);
+    var self = options => {
+        var args = {
+            target: null,                  // 对象
+            source: null                   // 图片资源地址数组
+        };
+
+        $.extend(args, options);
+
+        const width = args.target.width();
+        const height = args.target.height();
+
+        var app = new PIXI.Application(width, height, { transparent: true });
+        args.target.append(app.view);
 
         var frames = [];
 
-        for (let i = 1; i <= 66; i++) {
-            let zero = '';
-            for (let j = 0; j < 2 - i.toString().length; j++) {
-                zero += '0';
-            }
-
-            frames.push(PIXI.Texture.fromFrame(`./assets/img/common/loader/sprite/${zero + i}.jpg`));
+        for (const img of args.source) {
+            frames.push(PIXI.Texture.fromImage(img));
         }
 
         var anim = new PIXI.extras.AnimatedSprite(frames);
-        anim.width = $('.movie').width();
-        anim.height = $('.movie').height();
-        // anim.anchor.set(0.5);
-        anim.animationSpeed = 0.15;
+        anim.width = width;
+        anim.height = height;
+        anim.anchor.set(0);
         app.stage.addChild(anim);
-        anim.play();
+        // anim.gotoAndStop(30);
+        // anim.play();
+
+        return anim;
     };
 
     return self;
