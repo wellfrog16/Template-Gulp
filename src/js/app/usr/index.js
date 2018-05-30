@@ -1,7 +1,7 @@
 // 剧本
 
 define([
-    'text!../components/index.html!strip',
+    'text!../components/usr/index.html!strip',
     'helper/rivers',
     'utils/sword'],
 (htmlBlock) => {

@@ -111,7 +111,7 @@
         'video': 'app/common/video',
 
         'source' : 'app/source',
-        'index' : 'app/index',
+        'index' : 'app/usr/index',
 
         'script': 'app/script',
     },
