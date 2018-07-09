@@ -80,7 +80,7 @@ define([
     laker.mainload = function() {
         const loader = new PIXI.loaders.Loader('assets/img/');
 
-        for (const item of source.preload) {
+        for (const item of source.mainload) {
             loader.add(item.src);
         }
 
