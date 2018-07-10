@@ -14,13 +14,11 @@ define([
     const laker = {};
 
     let anim = null;
-
-    // let callback = null;
-    // let movie = null;
+    let callback = null;
 
     // 挂载
     laker.mount = function(cb) {
-        // callback = cb;
+        callback = cb;
         // 如果小于ie9，则取消loading（createjs不支持）;
         if ($.browser.msie && $.browser.version < 9) {
             return cb();
@@ -86,9 +84,15 @@ define([
 
         loader.load((loader, resources) => {
             console.log('加载完成');
-            anim.destroy();
-            this.destroy();
-            // anim.stop();
+
+            this.$root.find('.container').fadeOut(() => anim.destroy());
+
+            const time = 500;
+            this.$root.find('.top').delay(time).animate({'top': '-50%'}, 1200, 'easeInOutExpo');
+            this.$root.find('.bottom').delay(time).animate({'bottom': '-50%'}, 1200, 'easeInOutExpo', () => {
+                this.destroy();
+                callback();
+            });
         });
 
         loader.onProgress.add(loader => {
