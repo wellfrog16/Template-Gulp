@@ -88,7 +88,7 @@ define([
             this.$root.find('.container').fadeOut(() => anim.destroy());
 
             const time = 500;
-            this.$root.find('.cut-line').delay(500).animate({'left': '77%'}, 1500, 'easeInOutExpo', () => {
+            this.$root.find('.cut-line').delay(500).animate({'left': '0%', 'opacity': 0}, 1200, 'easeInOutExpo', () => {
                 this.$root.find('.top').delay(time).animate({'top': '-40%'}, 1500, 'easeInOutExpo');
                 this.$root.find('.bottom').delay(time).animate({'bottom': '-40%'}, 1500, 'easeInOutExpo', () => {
                     this.destroy();
