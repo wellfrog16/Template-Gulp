@@ -84,6 +84,7 @@ define([
 
         loader.load((loader, resources) => {
             console.log('加载完成');
+            callback();
 
             this.$root.find('.container').fadeOut(() => anim.destroy());
 
@@ -92,7 +93,6 @@ define([
                 this.$root.find('.top').delay(time).animate({'top': '-40%'}, 1500, 'easeInOutExpo');
                 this.$root.find('.bottom').delay(time).animate({'bottom': '-40%'}, 1500, 'easeInOutExpo', () => {
                     this.destroy();
-                    callback();
                 });
             });
         });

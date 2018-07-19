@@ -4,14 +4,14 @@ define([
     'text!../components/usr/index.html!strip',
     'helper/rivers',
     'utils/sword'],
-(htmlBlock) => {
+(html) => {
     const world = myWorld;
     const river = {};
 
     // 挂载
     river.mount = function() {
         if (!this.$root) {
-            world.root.append(htmlBlock);
+            world.root.append(html);
             this.$root = world.root.find('.usr-index');
         }
     };
