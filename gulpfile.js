@@ -255,7 +255,7 @@ gulp.task('requirejs', (cb) =>{
 
 // html替换压缩
 gulp.task('htmlreplace', () =>
-    gulp.src(`${distDev}/index.html`)
+    gulp.src(`${distDev}/*.html`)
         .pipe($.htmlReplace({
             'js': ['js/require.combine.js', 'js/app.min.js'],
             'css': ['style/main.min.css', 'style/import.min.css']

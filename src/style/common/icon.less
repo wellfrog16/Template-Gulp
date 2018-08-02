@@ -5,6 +5,13 @@
     background-repeat: no-repeat;
 }
 
+.iconInit(@url) {
+    background-image: data-uri(@url);
+    background-size: 100% auto;
+    width: image-width(@url);
+    height: image-height(@url);
+}
+
 // .icon-col(@url, @x) {
 //     background-image: url(@url);
 //     width: image-width(@url);
