@@ -27,6 +27,7 @@ module.exports = {
     'semi': [2, 'always'],  // 始终分号结尾
     'no-extra-semi': 2, // 禁止不必要的分号
     'space-before-function-paren': [2, 'never'],  //禁止函数圆括号之前有一个空格
+    'no-new': 0,
 
     // allow paren-less arrow functions
     'arrow-parens': 0,
