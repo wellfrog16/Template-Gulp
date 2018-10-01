@@ -23,7 +23,7 @@ define([
         world.lakers.$music.mount(false);
         world.lakers.$loader.mount(() => {
             console.log('回调');
-            // world.lakers.$video.mount($('body'));
+            world.lakers.$video.mount();
             world.rivers.$index.mount();
         });
     };
