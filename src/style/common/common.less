@@ -8,11 +8,27 @@ body {
     background-color: @g-backgroundColor;
 }
 
-// .table {
-//     display: table;
-// }
+.fullsize {
+    width: 100%;
+    height: 100%;
+}
 
-// .table-cell {
-//     display: table-cell;
-//     vertical-align: middle;
-// }
+.abs-fullsize {
+    .fullsize;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.rel-fullsize {
+    .fullsize;
+    
+    position: relative;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
